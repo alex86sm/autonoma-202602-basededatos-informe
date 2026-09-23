@@ -43,13 +43,34 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 12px 0 18px;
+      border-spacing: 0;
+      margin: 4px 0 8px;
       font-size: 10.5pt;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
     }
     th, td {
       border: 1px solid #94a3b8;
-      padding: 7px 8px;
+      padding: 2px 5px;
+      line-height: 1.15;
       vertical-align: top;
+    }
+    /* Tablas compactas: sin espacios heredados dentro de las celdas */
+    thead {
+      display: table-header-group;
+    }
+    tr {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    th p, td p,
+    th ul, td ul,
+    th ol, td ol,
+    th blockquote, td blockquote {
+      margin: 0;
+    }
+    th li, td li {
+      margin-bottom: 0;
     }
     th {
       background: #e2e8f0;
@@ -130,7 +151,8 @@
     }
     table.p4 th, table.p4 td {
       font-size: 9.5pt;
-      padding: 5px 6px;
+      padding: 2px 5px;
+      line-height: 1.15;
     }
     table.p4 td.p4-nowrap {
       white-space: nowrap;
@@ -165,6 +187,20 @@
       body {
         margin: 0;
         max-width: none;
+      }
+      /* Las tablas largas pueden continuar en la pagina siguiente, repitiendo la cabecera */
+      table {
+        page-break-inside: auto;
+      }
+      tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+      }
+      thead {
+        display: table-header-group;
+      }
+      .p4-scroll {
+        overflow: visible;
       }
     }
   </style>
