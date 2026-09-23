@@ -1,0 +1,410 @@
+# 1. Análisis del Dominio y Requerimientos Informacionales
+
+## 1.1 Descripción del dominio de aplicación
+
+### Contexto organizacional o de negocio
+
+El presente proyecto plantea el diseño de una base de datos para un **Sistema de Gestión de Restaurante**, cuyo objetivo es organizar y administrar la información relacionada con las principales operaciones de un establecimiento dedicado a la atención de clientes y venta de alimentos y bebidas.
+
+El sistema permitirá gestionar información de los clientes, empleados, mesas, reservas, categorías, productos, pedidos, detalles de pedidos y pagos. De esta manera, se busca centralizar la información y facilitar su registro, consulta y actualización.
+
+Las operaciones principales del restaurante comprenden el registro de clientes, administración de mesas, gestión de reservas, administración de productos y categorías, registro de pedidos, seguimiento de los productos solicitados y registro de los pagos correspondientes.
+
+El sistema considera la participación de diferentes usuarios, entre ellos administradores, recepcionistas, mozos, cajeros, cocineros y clientes, cada uno con diferentes necesidades de información dentro del proceso de atención.
+
+### Problemática informacional identificada
+
+En un restaurante que no cuenta con una adecuada estructura de información pueden presentarse problemas como la duplicidad de datos, dificultad para conocer la disponibilidad de las mesas, registros desorganizados de pedidos y dificultad para consultar el historial de ventas y pagos.
+
+Asimismo, mantener la información de productos y categorías de manera repetitiva puede generar inconsistencias. Por ejemplo, si la información de una categoría se registra directamente en diferentes pedidos, una modificación podría requerir actualizar múltiples registros.
+
+Otro problema es la dificultad para mantener un historial organizado de las reservas, pedidos y pagos realizados por los clientes.
+
+Por ello, se plantea una base de datos estructurada que permita organizar la información mediante entidades relacionadas, reduciendo la redundancia y facilitando la integridad y consistencia de los datos.
+
+---
+
+## 1.2 Requerimientos de información
+
+### Listado de requerimientos funcionales relacionados con datos
+
+| Código | Requerimiento |
+|---|---|
+| RI-01 | Registrar y consultar información de los clientes. |
+| RI-02 | Registrar y administrar información de los empleados. |
+| RI-03 | Registrar y gestionar las mesas del restaurante. |
+| RI-04 | Registrar y administrar las reservas realizadas por los clientes. |
+| RI-05 | Registrar y gestionar las categorías de productos. |
+| RI-06 | Registrar y gestionar los productos ofrecidos por el restaurante. |
+| RI-07 | Registrar los pedidos realizados por los clientes. |
+| RI-08 | Registrar los productos y cantidades correspondientes a cada pedido. |
+| RI-09 | Registrar los pagos asociados a los pedidos. |
+| RI-10 | Consultar la disponibilidad y estado de las mesas. |
+| RI-11 | Consultar los pedidos registrados y su estado. |
+| RI-12 | Consultar información relacionada con ventas y pagos. |
+
+### Identificación de usuarios y sus necesidades de información
+
+| Usuario | Necesidades de información |
+|---|---|
+| Administrador | Gestionar empleados, productos, categorías, mesas y consultar información general del sistema. |
+| Recepcionista | Registrar clientes, gestionar reservas y consultar disponibilidad de mesas. |
+| Mozo | Registrar pedidos y consultar los productos disponibles. |
+| Cajero | Consultar pedidos y registrar pagos. |
+| Cocinero | Consultar los pedidos y productos que requieren preparación. |
+| Cliente | Consultar productos, realizar reservas y efectuar pedidos. |
+
+### Reglas de negocio identificadas y cómo se implementaron
+
+| Código | Regla de negocio |
+|---|---|
+| RN-01 | Cada cliente debe estar identificado de manera única dentro del sistema. |
+| RN-02 | Cada mesa debe tener un número único. |
+| RN-03 | Una reserva debe estar asociada a un cliente y a una mesa. |
+| RN-04 | Un cliente puede realizar varias reservas en diferentes momentos. |
+| RN-05 | Una mesa puede encontrarse disponible, reservada u ocupada. |
+| RN-06 | Un pedido debe estar asociado a un cliente. |
+| RN-07 | Un pedido debe ser registrado por un empleado. |
+| RN-08 | Un pedido puede contener uno o varios productos. |
+| RN-09 | Un producto puede formar parte de diferentes pedidos. |
+| RN-10 | Cada producto pertenece a una categoría. |
+| RN-11 | Cada detalle de pedido debe registrar la cantidad solicitada y el precio unitario correspondiente. |
+| RN-12 | Un pedido puede generar un pago asociado. |
+| RN-13 | Los empleados pueden desempeñar diferentes funciones dentro del restaurante. |
+| RN-14 | La información de productos y categorías debe mantenerse separada para evitar la duplicidad de información. |
+
+Estas reglas se implementan mediante las entidades, atributos, claves y relaciones definidas posteriormente en el modelo conceptual y en el modelo relacional.
+
+---
+
+## 1.3 Casos de uso principales
+
+### Descripción de los casos de uso que la base de datos debe soportar
+
+| Código | Caso de uso | Descripción |
+|---|---|---|
+| CU-01 | Gestionar clientes | Permite registrar, consultar y actualizar información de los clientes. |
+| CU-02 | Gestionar reservas | Permite registrar reservas y consultar su estado. |
+| CU-03 | Gestionar mesas | Permite registrar mesas y consultar su disponibilidad. |
+| CU-04 | Gestionar productos | Permite registrar y actualizar productos ofrecidos. |
+| CU-05 | Gestionar categorías | Permite administrar las categorías de productos. |
+| CU-06 | Registrar pedido | Permite registrar un pedido asociado a un cliente y empleado. |
+| CU-07 | Consultar pedido | Permite consultar los productos y estado de un pedido. |
+| CU-08 | Registrar pago | Permite registrar el pago correspondiente a un pedido. |
+| CU-09 | Gestionar empleados | Permite registrar y consultar información de los empleados. |
+| CU-10 | Consultar ventas | Permite consultar información relacionada con pedidos y pagos. |
+
+#=====IMAGE====#
+
+Generar un **diagrama de casos de uso** para un Sistema de Gestión de Restaurante.
+
+Actores:
+- Administrador
+- Recepcionista
+- Mozo
+- Cajero
+- Cocinero
+- Cliente
+
+Casos de uso:
+- Gestionar clientes
+- Gestionar reservas
+- Gestionar mesas
+- Gestionar productos
+- Gestionar categorías
+- Registrar pedido
+- Consultar pedido
+- Registrar pago
+- Gestionar empleados
+- Consultar ventas
+
+El diagrama debe mostrar claramente las asociaciones entre los actores y los casos de uso.
+
+#=====FINIMAGE====#
+
+
+# 2. Modelo Conceptual: Diagrama Entidad-Relación
+
+## 2.1 Identificación de entidades
+
+### Entidades principales del dominio
+
+Para representar el funcionamiento del Sistema de Gestión de Restaurante se identificaron las siguientes entidades:
+
+- **CLIENTE**
+- **EMPLEADO**
+- **MESA**
+- **RESERVA**
+- **CATEGORIA**
+- **PRODUCTO**
+- **PEDIDO**
+- **DETALLE_PEDIDO**
+- **PAGO**
+
+### Justificación de cada entidad identificada
+
+| Entidad | Justificación |
+|---|---|
+| CLIENTE | Permite almacenar la información de las personas que realizan reservas y pedidos. |
+| EMPLEADO | Representa al personal encargado de participar en las operaciones del restaurante. |
+| MESA | Representa los espacios físicos disponibles para la atención de los clientes. |
+| RESERVA | Permite registrar las solicitudes de reserva realizadas por los clientes. |
+| CATEGORIA | Permite clasificar los productos ofrecidos por el restaurante. |
+| PRODUCTO | Representa los alimentos y bebidas disponibles para los clientes. |
+| PEDIDO | Representa una solicitud de productos realizada por un cliente. |
+| DETALLE_PEDIDO | Permite registrar los productos incluidos en cada pedido, junto con sus cantidades y precios. |
+| PAGO | Permite registrar la información del pago asociado a un pedido. |
+
+---
+
+## 2.2 Especificación de atributos
+
+### Atributos por entidad con sus tipos
+
+### CLIENTE
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_cliente | Entero | Identificador único del cliente. |
+| dni | Cadena | Documento de identidad del cliente. |
+| nombres | Cadena | Nombres del cliente. |
+| apellidos | Cadena | Apellidos del cliente. |
+| telefono | Cadena | Número telefónico. |
+| correo | Cadena | Correo electrónico. |
+
+### EMPLEADO
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_empleado | Entero | Identificador único del empleado. |
+| dni | Cadena | Documento de identidad del empleado. |
+| nombres | Cadena | Nombres del empleado. |
+| apellidos | Cadena | Apellidos del empleado. |
+| telefono | Cadena | Número telefónico. |
+| correo | Cadena | Correo electrónico. |
+
+### MESA
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_mesa | Entero | Identificador único de la mesa. |
+| numero_mesa | Entero | Número asignado a la mesa. |
+| capacidad | Entero | Cantidad máxima de personas que puede atender. |
+| estado | Cadena | Estado actual de la mesa. |
+
+### RESERVA
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_reserva | Entero | Identificador único de la reserva. |
+| fecha_reserva | Fecha | Fecha de la reserva. |
+| hora_reserva | Hora | Hora de la reserva. |
+| cantidad_personas | Entero | Cantidad de personas para la reserva. |
+| estado | Cadena | Estado de la reserva. |
+
+### CATEGORIA
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_categoria | Entero | Identificador único de la categoría. |
+| nombre_categoria | Cadena | Nombre de la categoría. |
+| descripcion | Cadena | Descripción de la categoría. |
+
+### PRODUCTO
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_producto | Entero | Identificador único del producto. |
+| nombre_producto | Cadena | Nombre del producto. |
+| descripcion | Cadena | Descripción del producto. |
+| precio | Decimal | Precio del producto. |
+| estado | Cadena | Estado de disponibilidad del producto. |
+
+### PEDIDO
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_pedido | Entero | Identificador único del pedido. |
+| fecha_pedido | Fecha | Fecha en que se registra el pedido. |
+| hora_pedido | Hora | Hora en que se registra el pedido. |
+| estado | Cadena | Estado actual del pedido. |
+
+El total del pedido puede obtenerse mediante el cálculo de los detalles registrados, por lo que se considera un dato derivado.
+
+### DETALLE_PEDIDO
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_pedido | Entero | Identificador del pedido. |
+| id_producto | Entero | Identificador del producto. |
+| cantidad | Entero | Cantidad solicitada del producto. |
+| precio_unitario | Decimal | Precio del producto registrado en el momento del pedido. |
+
+### PAGO
+
+| Atributo | Tipo | Descripción |
+|---|---|---|
+| id_pago | Entero | Identificador único del pago. |
+| fecha_pago | Fecha | Fecha en que se realiza el pago. |
+| monto | Decimal | Monto pagado. |
+| metodo_pago | Cadena | Método utilizado para realizar el pago. |
+| estado | Cadena | Estado del pago. |
+
+### Dominios de cada atributo
+
+| Atributo | Dominio |
+|---|---|
+| Identificadores | Números enteros positivos. |
+| DNI | Cadena de 8 caracteres numéricos. |
+| Nombres y apellidos | Cadenas de texto. |
+| Teléfono | Cadena numérica de longitud variable. |
+| Correo | Cadena con formato de correo electrónico. |
+| Capacidad | Entero positivo. |
+| Estado de mesa | Disponible, Reservada, Ocupada. |
+| Fecha | Fecha válida. |
+| Hora | Hora válida. |
+| Cantidad de personas | Entero positivo. |
+| Estado de reserva | Pendiente, Confirmada, Cancelada, Atendida. |
+| Precio | Número decimal positivo. |
+| Estado de producto | Disponible, No disponible. |
+| Estado de pedido | Pendiente, En preparación, Listo, Entregado, Cancelado. |
+| Cantidad | Entero positivo. |
+| Método de pago | Efectivo, Tarjeta, Transferencia. |
+| Estado de pago | Pendiente, Pagado, Anulado. |
+
+### Identificación de atributos clave
+
+| Entidad | Clave primaria |
+|---|---|
+| CLIENTE | id_cliente |
+| EMPLEADO | id_empleado |
+| MESA | id_mesa |
+| RESERVA | id_reserva |
+| CATEGORIA | id_categoria |
+| PRODUCTO | id_producto |
+| PEDIDO | id_pedido |
+| DETALLE_PEDIDO | (id_pedido, id_producto) |
+| PAGO | id_pago |
+
+En `DETALLE_PEDIDO`, la clave primaria es compuesta porque la combinación de `id_pedido` e `id_producto` identifica de manera única la participación de un producto dentro de un pedido.
+
+---
+
+## 2.3 Relaciones entre entidades
+
+### Descripción de relaciones identificadas
+
+| Relación | Cardinalidad | Descripción |
+|---|---|---|
+| CLIENTE — RESERVA | 1:N | Un cliente puede realizar varias reservas. |
+| RESERVA — MESA | N:1 | Una reserva corresponde a una mesa. |
+| CLIENTE — PEDIDO | 1:N | Un cliente puede realizar varios pedidos. |
+| EMPLEADO — PEDIDO | 1:N | Un empleado puede registrar varios pedidos. |
+| PEDIDO — DETALLE_PEDIDO | 1:N | Un pedido puede contener varios detalles. |
+| PRODUCTO — DETALLE_PEDIDO | 1:N | Un producto puede aparecer en diferentes detalles de pedido. |
+| CATEGORIA — PRODUCTO | 1:N | Una categoría puede contener varios productos. |
+| PEDIDO — PAGO | 1:1 | Un pedido tiene asociado un pago. |
+
+La relación conceptual entre **PEDIDO** y **PRODUCTO** es de tipo **N:M**, ya que un pedido puede contener varios productos y un producto puede formar parte de diferentes pedidos. Esta relación se resuelve mediante la entidad asociativa **DETALLE_PEDIDO**.
+
+### Grado de las relaciones
+
+Todas las relaciones identificadas en el modelo son de **grado binario**, debido a que cada relación involucra a dos entidades.
+
+### Cardinalidades
+
+Las cardinalidades utilizadas son:
+
+- **1:1** para PEDIDO — PAGO.
+- **1:N** para CLIENTE — RESERVA.
+- **1:N** para CLIENTE — PEDIDO.
+- **1:N** para EMPLEADO — PEDIDO.
+- **1:N** para CATEGORIA — PRODUCTO.
+- **1:N** para PEDIDO — DETALLE_PEDIDO.
+- **1:N** para PRODUCTO — DETALLE_PEDIDO.
+- **N:1** para RESERVA — MESA.
+
+### Roles en las relaciones
+
+Los principales roles identificados son:
+
+- **CLIENTE:** realiza reservas y solicita pedidos.
+- **EMPLEADO:** registra y atiende pedidos según su función.
+- **MESA:** representa el espacio físico asignado a una reserva.
+- **PEDIDO:** representa la operación que contiene los productos solicitados.
+- **PRODUCTO:** representa los elementos que pueden ser incluidos en un pedido.
+
+---
+
+## 2.4 Diagrama ER completo
+
+### Presentación del diagrama
+
+El siguiente diagrama presenta el **Modelo Entidad-Relación** del Sistema de Gestión de Restaurante, mostrando las principales entidades, atributos, claves y relaciones identificadas a partir de los requerimientos del sistema. Las cardinalidades permiten representar cómo interactúan las entidades dentro del dominio.
+
+La entidad **DETALLE_PEDIDO** permite resolver la relación muchos a muchos existente conceptualmente entre **PEDIDO** y **PRODUCTO**.
+
+**Figura 1. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.**
+
+#=====IMAGE====#
+
+Generar el **Diagrama Entidad-Relación completo del Sistema de Gestión de Restaurante**.
+
+Debe mostrar las siguientes entidades:
+
+- CLIENTE
+- EMPLEADO
+- MESA
+- RESERVA
+- CATEGORIA
+- PRODUCTO
+- PEDIDO
+- DETALLE_PEDIDO
+- PAGO
+
+Relaciones:
+
+- CLIENTE 1:N RESERVA
+- RESERVA N:1 MESA
+- CLIENTE 1:N PEDIDO
+- EMPLEADO 1:N PEDIDO
+- PEDIDO 1:N DETALLE_PEDIDO
+- PRODUCTO 1:N DETALLE_PEDIDO
+- CATEGORIA 1:N PRODUCTO
+- PEDIDO 1:1 PAGO
+
+El diagrama debe utilizar una notación clara y académica, mostrando las claves primarias y las relaciones entre las entidades.
+
+#=====FINIMAGE====#
+
+### Herramienta utilizada
+
+Para la elaboración del diagrama Entidad-Relación se utilizó **dbdiagram.io**, herramienta que permite representar visualmente las entidades, atributos y relaciones de una base de datos mediante código DBML.
+
+---
+
+# 3. Modelo Conceptual Extendido: Especialización y Generalización
+
+## 3.1 Identificación de jerarquías
+
+### Superclases y subclases identificadas
+
+Dentro del modelo conceptual extendido se identificó una jerarquía correspondiente a la entidad **EMPLEADO**.
+
+La superclase es:
+
+- **EMPLEADO**
+
+Las subclases identificadas son:
+
+- **MOZO**
+- **CAJERO**
+- **COCINERO**
+
+La estructura de especialización es:
+
+```text
+                    EMPLEADO
+                   /    |    \
+                  /     |     \
+               MOZO   CAJERO  COCINERO

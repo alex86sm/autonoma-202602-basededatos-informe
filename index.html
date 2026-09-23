@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador de Diagramas - Informe BD</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Modelado y Diseño de Base de Datos</p>
+      <h1>Generador de Diagramas - Informe BD</h1>
+    </div>
+    <div class="status-pill" id="statusPill">Esperando documento</div>
+  </header>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <section class="panel">
+        <h2>Archivo</h2>
+        <p class="muted">Fuente: <strong>documento.txt</strong></p>
+        <div class="actions stack">
+          <button id="loadDefaultBtn" type="button">Analizar documento</button>
+          <label class="file-button">
+            Seleccionar documento.txt
+            <input id="fileInput" type="file" accept=".txt,.md,text/plain">
+          </label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Ajustes de exportación</h2>
+        <div class="field-grid">
+          <label>Ancho <input id="widthInput" type="number" min="900" max="2600" step="50" value="1400"></label>
+          <label>Alto <input id="heightInput" type="number" min="650" max="1800" step="50" value="900"></label>
+          <label>Escala PNG <input id="scaleInput" type="number" min="1" max="4" step="0.5" value="2"></label>
+          <label>Fuente <input id="fontInput" type="number" min="10" max="24" step="1" value="14"></label>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="section-title">
+          <h2>Secciones</h2>
+          <span id="sectionCount">0</span>
+        </div>
+        <ol id="sectionsList" class="sections-list"></ol>
+      </section>
+    </aside>
+
+    <section class="workspace">
+      <div class="toolbar">
+        <div>
+          <h2>Imágenes detectadas</h2>
+          <p id="summaryText" class="muted">Carga el documento para generar las tareas.</p>
+        </div>
+        <div class="actions">
+          <button id="generateAllBtn" type="button" disabled>Generar todas</button>
+          <button id="downloadAllBtn" type="button" disabled>Descargar todas</button>
+        </div>
+      </div>
+
+      <div id="cards" class="cards">
+        <div class="empty">
+          <strong>Sin imágenes generadas todavía.</strong>
+          <span>Usa “Analizar documento” o selecciona el archivo manualmente.</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

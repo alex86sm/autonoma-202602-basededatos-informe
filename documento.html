@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="windows-1252">
+  <title>Informe - Modelado y Diseño de Base de Datos</title>
+  <style>
+    body {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 28px;
+      color: #111827;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 12pt;
+      line-height: 1.5;
+      background: #ffffff;
+    }
+    h1, h2, h3 {
+      color: #0f172a;
+      line-height: 1.25;
+      page-break-after: avoid;
+    }
+    h1 {
+      margin-top: 28px;
+      font-size: 20pt;
+    }
+    h2 {
+      margin-top: 24px;
+      font-size: 16pt;
+    }
+    h3 {
+      margin-top: 18px;
+      font-size: 13.5pt;
+    }
+    p {
+      margin: 0 0 12px;
+      text-align: justify;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      font-size: 10.5pt;
+    }
+    th, td {
+      border: 1px solid #94a3b8;
+      padding: 7px 8px;
+      vertical-align: top;
+    }
+    th {
+      background: #e2e8f0;
+      font-weight: bold;
+      text-align: left;
+    }
+    ul {
+      margin-top: 0;
+      margin-bottom: 14px;
+      padding-left: 34px;
+      list-style-position: outside;
+    }
+    li {
+      margin-bottom: 5px;
+      padding-left: 4px;
+    }
+    code, pre {
+      font-family: Consolas, 'Courier New', monospace;
+    }
+    pre {
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+    .generated-figure {
+      margin: 18px 0 24px;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+    .generated-figure img {
+      display: block;
+      width: 100%;
+      max-width: 860px;
+      height: auto;
+      margin: 0 auto 8px;
+      background: #ffffff;
+    }
+    .generated-figure figcaption {
+      color: #374151;
+      font-size: 10.5pt;
+      font-style: italic;
+      text-align: center;
+    }
+    @media print {
+      body {
+        margin: 0;
+        max-width: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<h1>1. Análisis del Dominio y Requerimientos Informacionales</h1>
+<h2>1.1 Descripción del dominio de aplicación</h2>
+<h3>Contexto organizacional o de negocio</h3>
+<p>El presente proyecto plantea el diseño de una base de datos para un <strong>Sistema de Gestión de Restaurante</strong>, cuyo objetivo es organizar y administrar la información relacionada con las principales operaciones de un establecimiento dedicado a la atención de clientes y venta de alimentos y bebidas.</p>
+<p>El sistema permitirá gestionar información de los clientes, empleados, mesas, reservas, categorías, productos, pedidos, detalles de pedidos y pagos. De esta manera, se busca centralizar la información y facilitar su registro, consulta y actualización.</p>
+<p>Las operaciones principales del restaurante comprenden el registro de clientes, administración de mesas, gestión de reservas, administración de productos y categorías, registro de pedidos, seguimiento de los productos solicitados y registro de los pagos correspondientes.</p>
+<p>El sistema considera la participación de diferentes usuarios, entre ellos administradores, recepcionistas, mozos, cajeros, cocineros y clientes, cada uno con diferentes necesidades de información dentro del proceso de atención.</p>
+<h3>Problemática informacional identificada</h3>
+<p>En un restaurante que no cuenta con una adecuada estructura de información pueden presentarse problemas como la duplicidad de datos, dificultad para conocer la disponibilidad de las mesas, registros desorganizados de pedidos y dificultad para consultar el historial de ventas y pagos.</p>
+<p>Asimismo, mantener la información de productos y categorías de manera repetitiva puede generar inconsistencias. Por ejemplo, si la información de una categoría se registra directamente en diferentes pedidos, una modificación podría requerir actualizar múltiples registros.</p>
+<p>Otro problema es la dificultad para mantener un historial organizado de las reservas, pedidos y pagos realizados por los clientes.</p>
+<p>Por ello, se plantea una base de datos estructurada que permita organizar la información mediante entidades relacionadas, reduciendo la redundancia y facilitando la integridad y consistencia de los datos.</p>
+<h2>1.2 Requerimientos de información</h2>
+<h3>Listado de requerimientos funcionales relacionados con datos</h3>
+<table>
+<thead><tr><th>Código</th><th>Requerimiento</th></tr></thead>
+<tbody>
+<tr><td>RI-01</td><td>Registrar y consultar información de los clientes.</td></tr>
+<tr><td>RI-02</td><td>Registrar y administrar información de los empleados.</td></tr>
+<tr><td>RI-03</td><td>Registrar y gestionar las mesas del restaurante.</td></tr>
+<tr><td>RI-04</td><td>Registrar y administrar las reservas realizadas por los clientes.</td></tr>
+<tr><td>RI-05</td><td>Registrar y gestionar las categorías de productos.</td></tr>
+<tr><td>RI-06</td><td>Registrar y gestionar los productos ofrecidos por el restaurante.</td></tr>
+<tr><td>RI-07</td><td>Registrar los pedidos realizados por los clientes.</td></tr>
+<tr><td>RI-08</td><td>Registrar los productos y cantidades correspondientes a cada pedido.</td></tr>
+<tr><td>RI-09</td><td>Registrar los pagos asociados a los pedidos.</td></tr>
+<tr><td>RI-10</td><td>Consultar la disponibilidad y estado de las mesas.</td></tr>
+<tr><td>RI-11</td><td>Consultar los pedidos registrados y su estado.</td></tr>
+<tr><td>RI-12</td><td>Consultar información relacionada con ventas y pagos.</td></tr>
+</tbody>
+</table>
+<h3>Identificación de usuarios y sus necesidades de información</h3>
+<table>
+<thead><tr><th>Usuario</th><th>Necesidades de información</th></tr></thead>
+<tbody>
+<tr><td>Administrador</td><td>Gestionar empleados, productos, categorías, mesas y consultar información general del sistema.</td></tr>
+<tr><td>Recepcionista</td><td>Registrar clientes, gestionar reservas y consultar disponibilidad de mesas.</td></tr>
+<tr><td>Mozo</td><td>Registrar pedidos y consultar los productos disponibles.</td></tr>
+<tr><td>Cajero</td><td>Consultar pedidos y registrar pagos.</td></tr>
+<tr><td>Cocinero</td><td>Consultar los pedidos y productos que requieren preparación.</td></tr>
+<tr><td>Cliente</td><td>Consultar productos, realizar reservas y efectuar pedidos.</td></tr>
+</tbody>
+</table>
+<h3>Reglas de negocio identificadas y cómo se implementaron</h3>
+<table>
+<thead><tr><th>Código</th><th>Regla de negocio</th></tr></thead>
+<tbody>
+<tr><td>RN-01</td><td>Cada cliente debe estar identificado de manera única dentro del sistema.</td></tr>
+<tr><td>RN-02</td><td>Cada mesa debe tener un número único.</td></tr>
+<tr><td>RN-03</td><td>Una reserva debe estar asociada a un cliente y a una mesa.</td></tr>
+<tr><td>RN-04</td><td>Un cliente puede realizar varias reservas en diferentes momentos.</td></tr>
+<tr><td>RN-05</td><td>Una mesa puede encontrarse disponible, reservada u ocupada.</td></tr>
+<tr><td>RN-06</td><td>Un pedido debe estar asociado a un cliente.</td></tr>
+<tr><td>RN-07</td><td>Un pedido debe ser registrado por un empleado.</td></tr>
+<tr><td>RN-08</td><td>Un pedido puede contener uno o varios productos.</td></tr>
+<tr><td>RN-09</td><td>Un producto puede formar parte de diferentes pedidos.</td></tr>
+<tr><td>RN-10</td><td>Cada producto pertenece a una categoría.</td></tr>
+<tr><td>RN-11</td><td>Cada detalle de pedido debe registrar la cantidad solicitada y el precio unitario correspondiente.</td></tr>
+<tr><td>RN-12</td><td>Un pedido puede generar un pago asociado.</td></tr>
+<tr><td>RN-13</td><td>Los empleados pueden desempeñar diferentes funciones dentro del restaurante.</td></tr>
+<tr><td>RN-14</td><td>La información de productos y categorías debe mantenerse separada para evitar la duplicidad de información.</td></tr>
+</tbody>
+</table>
+<p>Estas reglas se implementan mediante las entidades, atributos, claves y relaciones definidas posteriormente en el modelo conceptual y en el modelo relacional.</p>
+<h2>1.3 Casos de uso principales</h2>
+<h3>Descripción de los casos de uso que la base de datos debe soportar</h3>
+<table>
+<thead><tr><th>Código</th><th>Caso de uso</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>CU-01</td><td>Gestionar clientes</td><td>Permite registrar, consultar y actualizar información de los clientes.</td></tr>
+<tr><td>CU-02</td><td>Gestionar reservas</td><td>Permite registrar reservas y consultar su estado.</td></tr>
+<tr><td>CU-03</td><td>Gestionar mesas</td><td>Permite registrar mesas y consultar su disponibilidad.</td></tr>
+<tr><td>CU-04</td><td>Gestionar productos</td><td>Permite registrar y actualizar productos ofrecidos.</td></tr>
+<tr><td>CU-05</td><td>Gestionar categorías</td><td>Permite administrar las categorías de productos.</td></tr>
+<tr><td>CU-06</td><td>Registrar pedido</td><td>Permite registrar un pedido asociado a un cliente y empleado.</td></tr>
+<tr><td>CU-07</td><td>Consultar pedido</td><td>Permite consultar los productos y estado de un pedido.</td></tr>
+<tr><td>CU-08</td><td>Registrar pago</td><td>Permite registrar el pago correspondiente a un pedido.</td></tr>
+<tr><td>CU-09</td><td>Gestionar empleados</td><td>Permite registrar y consultar información de los empleados.</td></tr>
+<tr><td>CU-10</td><td>Consultar ventas</td><td>Permite consultar información relacionada con pedidos y pagos.</td></tr>
+</tbody>
+</table>
+<figure class="generated-figure" data-diagram="usecase">
+  <figcaption>Figura. Diagrama de casos de uso del Sistema de Gestión de Restaurante.</figcaption>
+</figure>
+<h1>2. Modelo Conceptual: Diagrama Entidad-Relación</h1>
+<h2>2.1 Identificación de entidades</h2>
+<h3>Entidades principales del dominio</h3>
+<p>Para representar el funcionamiento del Sistema de Gestión de Restaurante se identificaron las siguientes entidades:</p>
+<ul>
+<li><strong>CLIENTE</strong></li>
+<li><strong>EMPLEADO</strong></li>
+<li><strong>MESA</strong></li>
+<li><strong>RESERVA</strong></li>
+<li><strong>CATEGORIA</strong></li>
+<li><strong>PRODUCTO</strong></li>
+<li><strong>PEDIDO</strong></li>
+<li><strong>DETALLE_PEDIDO</strong></li>
+<li><strong>PAGO</strong></li>
+</ul>
+<h3>Justificación de cada entidad identificada</h3>
+<table>
+<thead><tr><th>Entidad</th><th>Justificación</th></tr></thead>
+<tbody>
+<tr><td>CLIENTE</td><td>Permite almacenar la información de las personas que realizan reservas y pedidos.</td></tr>
+<tr><td>EMPLEADO</td><td>Representa al personal encargado de participar en las operaciones del restaurante.</td></tr>
+<tr><td>MESA</td><td>Representa los espacios físicos disponibles para la atención de los clientes.</td></tr>
+<tr><td>RESERVA</td><td>Permite registrar las solicitudes de reserva realizadas por los clientes.</td></tr>
+<tr><td>CATEGORIA</td><td>Permite clasificar los productos ofrecidos por el restaurante.</td></tr>
+<tr><td>PRODUCTO</td><td>Representa los alimentos y bebidas disponibles para los clientes.</td></tr>
+<tr><td>PEDIDO</td><td>Representa una solicitud de productos realizada por un cliente.</td></tr>
+<tr><td>DETALLE_PEDIDO</td><td>Permite registrar los productos incluidos en cada pedido, junto con sus cantidades y precios.</td></tr>
+<tr><td>PAGO</td><td>Permite registrar la información del pago asociado a un pedido.</td></tr>
+</tbody>
+</table>
+<h2>2.2 Especificación de atributos</h2>
+<h3>Atributos por entidad con sus tipos</h3>
+<h3>CLIENTE</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_cliente</td><td>Entero</td><td>Identificador único del cliente.</td></tr>
+<tr><td>dni</td><td>Cadena</td><td>Documento de identidad del cliente.</td></tr>
+<tr><td>nombres</td><td>Cadena</td><td>Nombres del cliente.</td></tr>
+<tr><td>apellidos</td><td>Cadena</td><td>Apellidos del cliente.</td></tr>
+<tr><td>telefono</td><td>Cadena</td><td>Número telefónico.</td></tr>
+<tr><td>correo</td><td>Cadena</td><td>Correo electrónico.</td></tr>
+</tbody>
+</table>
+<h3>EMPLEADO</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_empleado</td><td>Entero</td><td>Identificador único del empleado.</td></tr>
+<tr><td>dni</td><td>Cadena</td><td>Documento de identidad del empleado.</td></tr>
+<tr><td>nombres</td><td>Cadena</td><td>Nombres del empleado.</td></tr>
+<tr><td>apellidos</td><td>Cadena</td><td>Apellidos del empleado.</td></tr>
+<tr><td>telefono</td><td>Cadena</td><td>Número telefónico.</td></tr>
+<tr><td>correo</td><td>Cadena</td><td>Correo electrónico.</td></tr>
+</tbody>
+</table>
+<h3>MESA</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_mesa</td><td>Entero</td><td>Identificador único de la mesa.</td></tr>
+<tr><td>numero_mesa</td><td>Entero</td><td>Número asignado a la mesa.</td></tr>
+<tr><td>capacidad</td><td>Entero</td><td>Cantidad máxima de personas que puede atender.</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>Estado actual de la mesa.</td></tr>
+</tbody>
+</table>
+<h3>RESERVA</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_reserva</td><td>Entero</td><td>Identificador único de la reserva.</td></tr>
+<tr><td>fecha_reserva</td><td>Fecha</td><td>Fecha de la reserva.</td></tr>
+<tr><td>hora_reserva</td><td>Hora</td><td>Hora de la reserva.</td></tr>
+<tr><td>cantidad_personas</td><td>Entero</td><td>Cantidad de personas para la reserva.</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>Estado de la reserva.</td></tr>
+</tbody>
+</table>
+<h3>CATEGORIA</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_categoria</td><td>Entero</td><td>Identificador único de la categoría.</td></tr>
+<tr><td>nombre_categoria</td><td>Cadena</td><td>Nombre de la categoría.</td></tr>
+<tr><td>descripcion</td><td>Cadena</td><td>Descripción de la categoría.</td></tr>
+</tbody>
+</table>
+<h3>PRODUCTO</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_producto</td><td>Entero</td><td>Identificador único del producto.</td></tr>
+<tr><td>nombre_producto</td><td>Cadena</td><td>Nombre del producto.</td></tr>
+<tr><td>descripcion</td><td>Cadena</td><td>Descripción del producto.</td></tr>
+<tr><td>precio</td><td>Decimal</td><td>Precio del producto.</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>Estado de disponibilidad del producto.</td></tr>
+</tbody>
+</table>
+<h3>PEDIDO</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td>Identificador único del pedido.</td></tr>
+<tr><td>fecha_pedido</td><td>Fecha</td><td>Fecha en que se registra el pedido.</td></tr>
+<tr><td>hora_pedido</td><td>Hora</td><td>Hora en que se registra el pedido.</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>Estado actual del pedido.</td></tr>
+</tbody>
+</table>
+<p>El total del pedido puede obtenerse mediante el cálculo de los detalles registrados, por lo que se considera un dato derivado.</p>
+<h3>DETALLE_PEDIDO</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td>Identificador del pedido.</td></tr>
+<tr><td>id_producto</td><td>Entero</td><td>Identificador del producto.</td></tr>
+<tr><td>cantidad</td><td>Entero</td><td>Cantidad solicitada del producto.</td></tr>
+<tr><td>precio_unitario</td><td>Decimal</td><td>Precio del producto registrado en el momento del pedido.</td></tr>
+</tbody>
+</table>
+<h3>PAGO</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Tipo</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>id_pago</td><td>Entero</td><td>Identificador único del pago.</td></tr>
+<tr><td>fecha_pago</td><td>Fecha</td><td>Fecha en que se realiza el pago.</td></tr>
+<tr><td>monto</td><td>Decimal</td><td>Monto pagado.</td></tr>
+<tr><td>metodo_pago</td><td>Cadena</td><td>Método utilizado para realizar el pago.</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>Estado del pago.</td></tr>
+</tbody>
+</table>
+<h3>Dominios de cada atributo</h3>
+<table>
+<thead><tr><th>Atributo</th><th>Dominio</th></tr></thead>
+<tbody>
+<tr><td>Identificadores</td><td>Números enteros positivos.</td></tr>
+<tr><td>DNI</td><td>Cadena de 8 caracteres numéricos.</td></tr>
+<tr><td>Nombres y apellidos</td><td>Cadenas de texto.</td></tr>
+<tr><td>Teléfono</td><td>Cadena numérica de longitud variable.</td></tr>
+<tr><td>Correo</td><td>Cadena con formato de correo electrónico.</td></tr>
+<tr><td>Capacidad</td><td>Entero positivo.</td></tr>
+<tr><td>Estado de mesa</td><td>Disponible, Reservada, Ocupada.</td></tr>
+<tr><td>Fecha</td><td>Fecha válida.</td></tr>
+<tr><td>Hora</td><td>Hora válida.</td></tr>
+<tr><td>Cantidad de personas</td><td>Entero positivo.</td></tr>
+<tr><td>Estado de reserva</td><td>Pendiente, Confirmada, Cancelada, Atendida.</td></tr>
+<tr><td>Precio</td><td>Número decimal positivo.</td></tr>
+<tr><td>Estado de producto</td><td>Disponible, No disponible.</td></tr>
+<tr><td>Estado de pedido</td><td>Pendiente, En preparación, Listo, Entregado, Cancelado.</td></tr>
+<tr><td>Cantidad</td><td>Entero positivo.</td></tr>
+<tr><td>Método de pago</td><td>Efectivo, Tarjeta, Transferencia.</td></tr>
+<tr><td>Estado de pago</td><td>Pendiente, Pagado, Anulado.</td></tr>
+</tbody>
+</table>
+<h3>Identificación de atributos clave</h3>
+<table>
+<thead><tr><th>Entidad</th><th>Clave primaria</th></tr></thead>
+<tbody>
+<tr><td>CLIENTE</td><td>id_cliente</td></tr>
+<tr><td>EMPLEADO</td><td>id_empleado</td></tr>
+<tr><td>MESA</td><td>id_mesa</td></tr>
+<tr><td>RESERVA</td><td>id_reserva</td></tr>
+<tr><td>CATEGORIA</td><td>id_categoria</td></tr>
+<tr><td>PRODUCTO</td><td>id_producto</td></tr>
+<tr><td>PEDIDO</td><td>id_pedido</td></tr>
+<tr><td>DETALLE_PEDIDO</td><td>(id_pedido, id_producto)</td></tr>
+<tr><td>PAGO</td><td>id_pago</td></tr>
+</tbody>
+</table>
+<p>En <code>DETALLE_PEDIDO</code>, la clave primaria es compuesta porque la combinación de <code>id_pedido</code> e <code>id_producto</code> identifica de manera única la participación de un producto dentro de un pedido.</p>
+<h2>2.3 Relaciones entre entidades</h2>
+<h3>Descripción de relaciones identificadas</h3>
+<table>
+<thead><tr><th>Relación</th><th>Cardinalidad</th><th>Descripción</th></tr></thead>
+<tbody>
+<tr><td>CLIENTE   RESERVA</td><td>1:N</td><td>Un cliente puede realizar varias reservas.</td></tr>
+<tr><td>RESERVA   MESA</td><td>N:1</td><td>Una reserva corresponde a una mesa.</td></tr>
+<tr><td>CLIENTE   PEDIDO</td><td>1:N</td><td>Un cliente puede realizar varios pedidos.</td></tr>
+<tr><td>EMPLEADO   PEDIDO</td><td>1:N</td><td>Un empleado puede registrar varios pedidos.</td></tr>
+<tr><td>PEDIDO   DETALLE_PEDIDO</td><td>1:N</td><td>Un pedido puede contener varios detalles.</td></tr>
+<tr><td>PRODUCTO   DETALLE_PEDIDO</td><td>1:N</td><td>Un producto puede aparecer en diferentes detalles de pedido.</td></tr>
+<tr><td>CATEGORIA   PRODUCTO</td><td>1:N</td><td>Una categoría puede contener varios productos.</td></tr>
+<tr><td>PEDIDO   PAGO</td><td>1:1</td><td>Un pedido tiene asociado un pago.</td></tr>
+</tbody>
+</table>
+<p>La relación conceptual entre <strong>PEDIDO</strong> y <strong>PRODUCTO</strong> es de tipo <strong>N:M</strong>, ya que un pedido puede contener varios productos y un producto puede formar parte de diferentes pedidos. Esta relación se resuelve mediante la entidad asociativa <strong>DETALLE_PEDIDO</strong>.</p>
+<h3>Grado de las relaciones</h3>
+<p>Todas las relaciones identificadas en el modelo son de <strong>grado binario</strong>, debido a que cada relación involucra a dos entidades.</p>
+<h3>Cardinalidades</h3>
+<p>Las cardinalidades utilizadas son:</p>
+<ul>
+<li><strong>1:1</strong> para PEDIDO   PAGO.</li>
+<li><strong>1:N</strong> para CLIENTE   RESERVA.</li>
+<li><strong>1:N</strong> para CLIENTE   PEDIDO.</li>
+<li><strong>1:N</strong> para EMPLEADO   PEDIDO.</li>
+<li><strong>1:N</strong> para CATEGORIA   PRODUCTO.</li>
+<li><strong>1:N</strong> para PEDIDO   DETALLE_PEDIDO.</li>
+<li><strong>1:N</strong> para PRODUCTO   DETALLE_PEDIDO.</li>
+<li><strong>N:1</strong> para RESERVA   MESA.</li>
+</ul>
+<h3>Roles en las relaciones</h3>
+<p>Los principales roles identificados son:</p>
+<ul>
+<li><strong>CLIENTE:</strong> realiza reservas y solicita pedidos.</li>
+<li><strong>EMPLEADO:</strong> registra y atiende pedidos según su función.</li>
+<li><strong>MESA:</strong> representa el espacio físico asignado a una reserva.</li>
+<li><strong>PEDIDO:</strong> representa la operación que contiene los productos solicitados.</li>
+<li><strong>PRODUCTO:</strong> representa los elementos que pueden ser incluidos en un pedido.</li>
+</ul>
+<h2>2.4 Diagrama ER completo</h2>
+<h3>Presentación del diagrama</h3>
+<p>El siguiente diagrama presenta el <strong>Modelo Entidad-Relación</strong> del Sistema de Gestión de Restaurante, mostrando las principales entidades, atributos, claves y relaciones identificadas a partir de los requerimientos del sistema. Las cardinalidades permiten representar cómo interactúan las entidades dentro del dominio.</p>
+<p>La entidad <strong>DETALLE_PEDIDO</strong> permite resolver la relación muchos a muchos existente conceptualmente entre <strong>PEDIDO</strong> y <strong>PRODUCTO</strong>.</p>
+<p><strong>Figura 1. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.</strong></p>
+<figure class="generated-figure" data-diagram="er">
+  <figcaption>Figura 1. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.</figcaption>
+</figure>
+<h3>Herramienta utilizada</h3>
+<p>Para la elaboración del diagrama Entidad-Relación se utilizó <strong>dbdiagram.io</strong>, herramienta que permite representar visualmente las entidades, atributos y relaciones de una base de datos mediante código DBML.</p>
+<h1>3. Modelo Conceptual Extendido: Especialización y Generalización</h1>
+<h2>3.1 Identificación de jerarquías</h2>
+<h3>Superclases y subclases identificadas</h3>
+<p>Dentro del modelo conceptual extendido se identificó una jerarquía correspondiente a la entidad <strong>EMPLEADO</strong>.</p>
+<p>La superclase es:</p>
+<ul>
+<li><strong>EMPLEADO</strong></li>
+</ul>
+<p>Las subclases identificadas son:</p>
+<ul>
+<li><strong>MOZO</strong></li>
+<li><strong>CAJERO</strong></li>
+<li><strong>COCINERO</strong></li>
+</ul>
+<p>La estructura de especialización es:</p>
+<pre><code>                    EMPLEADO
+                   /    |    \
+                  /     |     \
+               MOZO   CAJERO  COCINERO</code></pre>
+
+<script>
+(function generarDiagramasDocumento() {
+  const actores = ['Administrador', 'Recepcionista', 'Mozo', 'Cajero', 'Cocinero', 'Cliente'];
+  const casos = ['Gestionar clientes', 'Gestionar reservas', 'Gestionar mesas', 'Gestionar productos', 'Gestionar categorías', 'Registrar pedido', 'Consultar pedido', 'Registrar pago', 'Gestionar empleados', 'Consultar ventas'];
+  const asociaciones = {
+    Administrador: ['Gestionar empleados', 'Gestionar productos', 'Gestionar categorías', 'Gestionar mesas', 'Consultar ventas'],
+    Recepcionista: ['Gestionar clientes', 'Gestionar reservas', 'Gestionar mesas'],
+    Mozo: ['Registrar pedido', 'Consultar pedido'],
+    Cajero: ['Consultar pedido', 'Registrar pago', 'Consultar ventas'],
+    Cocinero: ['Consultar pedido'],
+    Cliente: ['Gestionar reservas', 'Registrar pedido']
+  };
+  const atributos = {
+    CLIENTE: ['PK id_cliente', 'dni', 'nombres', 'apellidos', 'telefono', 'correo'],
+    EMPLEADO: ['PK id_empleado', 'dni', 'nombres', 'apellidos', 'telefono', 'correo'],
+    MESA: ['PK id_mesa', 'numero_mesa', 'capacidad', 'estado'],
+    RESERVA: ['PK id_reserva', 'fecha_reserva', 'hora_reserva', 'cantidad_personas', 'estado', 'FK id_cliente', 'FK id_mesa'],
+    CATEGORIA: ['PK id_categoria', 'nombre_categoria', 'descripcion'],
+    PRODUCTO: ['PK id_producto', 'nombre_producto', 'descripcion', 'precio', 'estado', 'FK id_categoria'],
+    PEDIDO: ['PK id_pedido', 'fecha_pedido', 'hora_pedido', 'estado', 'FK id_cliente', 'FK id_empleado'],
+    DETALLE_PEDIDO: ['PK/FK id_pedido', 'PK/FK id_producto', 'cantidad', 'precio_unitario'],
+    PAGO: ['PK id_pago', 'fecha_pago', 'monto', 'metodo_pago', 'estado', 'FK id_pedido']
+  };
+  const relaciones = [['CLIENTE','1:N','RESERVA'], ['RESERVA','N:1','MESA'], ['CLIENTE','1:N','PEDIDO'], ['EMPLEADO','1:N','PEDIDO'], ['PEDIDO','1:N','DETALLE_PEDIDO'], ['PRODUCTO','1:N','DETALLE_PEDIDO'], ['CATEGORIA','1:N','PRODUCTO'], ['PEDIDO','1:1','PAGO']];
+  const pos = { CLIENTE:[40,115], RESERVA:[300,95], MESA:[590,115], EMPLEADO:[40,385], PEDIDO:[300,360], PAGO:[590,385], CATEGORIA:[40,620], PRODUCTO:[300,595], DETALLE_PEDIDO:[590,595] };
+
+  function esc(text) {
+    return String(text).replace(/[&<>]/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;'}[char]));
+  }
+  function wrap(width, height, content) {
+    return '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" role="img">' +
+      '<defs><style>.t{font-family:Arial,Helvetica,sans-serif;font-size:13px;fill:#111827}.b{font-weight:700}.h{font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;fill:#111827}.w{fill:#fff}.g{fill:#f8fafc}.teal{fill:#0f766e}.line{stroke:#475569;stroke-width:1.6}.key{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;fill:#0f766e}.small{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#475569}</style></defs><rect width="100%" height="100%" fill="#ffffff"/>' + content + '</svg>';
+  }
+  function usecaseSvg() {
+    const w = 900, h = 650;
+    const casePos = casos.map((name, i) => ({ name, x: 330 + (i % 2) * 220, y: 115 + Math.floor(i / 2) * 86 }));
+    const actorPos = actores.map((name, i) => ({ name, x: i < 3 ? 80 : 820, y: 150 + (i % 3) * 150 }));
+    let s = '<text x="450" y="35" text-anchor="middle" class="h">Diagrama UML de Casos de Uso</text><rect x="205" y="65" width="490" height="520" rx="8" class="g" stroke="#94a3b8"/><text x="450" y="90" text-anchor="middle" class="t b">Sistema de Gesti\u00f3n de Restaurante</text>';
+    actorPos.forEach(a => (asociaciones[a.name] || []).forEach(caso => { const c = casePos.find(item => item.name === caso); if (c) s += '<line x1="' + a.x + '" y1="' + (a.y + 18) + '" x2="' + c.x + '" y2="' + c.y + '" class="line"/>'; }));
+    casePos.forEach(c => { s += '<ellipse cx="' + c.x + '" cy="' + c.y + '" rx="95" ry="28" class="w" stroke="#0f766e" stroke-width="1.8"/><text x="' + c.x + '" y="' + (c.y + 4) + '" text-anchor="middle" class="t">' + esc(c.name) + '</text>'; });
+    actorPos.forEach(a => { s += '<circle cx="' + a.x + '" cy="' + (a.y - 24) + '" r="14" class="w" stroke="#334155" stroke-width="1.8"/><line x1="' + a.x + '" y1="' + (a.y - 10) + '" x2="' + a.x + '" y2="' + (a.y + 35) + '" class="line"/><line x1="' + (a.x - 22) + '" y1="' + (a.y + 8) + '" x2="' + (a.x + 22) + '" y2="' + (a.y + 8) + '" class="line"/><line x1="' + a.x + '" y1="' + (a.y + 35) + '" x2="' + (a.x - 20) + '" y2="' + (a.y + 68) + '" class="line"/><line x1="' + a.x + '" y1="' + (a.y + 35) + '" x2="' + (a.x + 20) + '" y2="' + (a.y + 68) + '" class="line"/><text x="' + a.x + '" y="' + (a.y + 92) + '" text-anchor="middle" class="t b">' + esc(a.name) + '</text>'; });
+    return wrap(w, h, s);
+  }
+  function center(name) { return { x: pos[name][0] + 105, y: pos[name][1] + 78 }; }
+  function entidad(nombre) {
+    const p = pos[nombre], at = atributos[nombre], alto = 36 + at.length * 21;
+    let s = '<rect x="' + p[0] + '" y="' + p[1] + '" width="210" height="' + alto + '" rx="5" class="w" stroke="#334155" stroke-width="1.6"/><rect x="' + p[0] + '" y="' + p[1] + '" width="210" height="32" rx="5" class="teal"/><text x="' + (p[0]+105) + '" y="' + (p[1]+21) + '" text-anchor="middle" style="font-family:Arial;font-size:13px;font-weight:700;fill:#fff">' + nombre + '</text>';
+    at.forEach((a, i) => { s += '<text x="' + (p[0]+10) + '" y="' + (p[1]+55+i*21) + '" class="' + (a.startsWith('PK') ? 'key' : 'small') + '">' + esc(a) + '</text>'; });
+    return s;
+  }
+  function erSvg() {
+    const w = 900, h = 820;
+    let s = '<text x="450" y="34" text-anchor="middle" class="h">Diagrama Entidad-Relación</text><text x="450" y="55" text-anchor="middle" class="small">Sistema de Gestión de Restaurante</text>';
+    relaciones.forEach(r => { const a = center(r[0]), b = center(r[2]), mx = (a.x+b.x)/2, my = (a.y+b.y)/2; s += '<line x1="' + a.x + '" y1="' + a.y + '" x2="' + b.x + '" y2="' + b.y + '" class="line"/><rect x="' + (mx-21) + '" y="' + (my-12) + '" width="42" height="22" rx="3" class="w" stroke="#cbd5e1"/><text x="' + mx + '" y="' + (my+4) + '" text-anchor="middle" class="small b">' + r[1] + '</text>'; });
+    Object.keys(atributos).forEach(n => { s += entidad(n); });
+    return wrap(w, h, s);
+  }
+  function svgToImage(svgMarkup, altText, target) {
+    const encodedSvg = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgMarkup);
+    const probe = new Image();
+    probe.onload = function() {
+      const canvas = document.createElement('canvas');
+      const scale = 4;
+      canvas.width = probe.naturalWidth * scale;
+      canvas.height = probe.naturalHeight * scale;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(probe, 0, 0, canvas.width, canvas.height);
+      const img = document.createElement('img');
+      img.src = canvas.toDataURL('image/png');
+      img.alt = altText;
+      img.width = probe.naturalWidth;
+      img.height = probe.naturalHeight;
+      img.style.width = '100%';
+      img.style.maxWidth = '860px';
+      img.style.height = 'auto';
+      target.insertBefore(img, target.firstChild);
+    };
+    probe.onerror = function() {
+      const fallback = document.createElement('img');
+      fallback.src = encodedSvg;
+      fallback.alt = altText;
+      target.insertBefore(fallback, target.firstChild);
+    };
+    probe.src = encodedSvg;
+  }
+  document.querySelectorAll('[data-diagram="usecase"]').forEach(el => svgToImage(usecaseSvg(), 'Diagrama UML de Casos de Uso', el));
+  document.querySelectorAll('[data-diagram="er"]').forEach(el => svgToImage(erSvg(), 'Diagrama Entidad-Relación', el));
+})();
+</script>
+</body>
+</html>
+
+
