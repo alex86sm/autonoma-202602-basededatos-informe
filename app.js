@@ -124,9 +124,10 @@
 
   function detectType(text) {
     const normalized = clean(text).toLowerCase();
+    // La especialización se evalúa primero porque es el enunciado más específico y su texto puede mencionar otros diagramas.
+    if (normalized.includes("especialización") || normalized.includes("especializacion") || normalized.includes("extendido") || normalized.includes("subclase")) return "extended";
     if (normalized.includes("casos de uso")) return "usecase";
     if (normalized.includes("entidad-relación") || normalized.includes("entidad-relacion")) return "er";
-    if (normalized.includes("especialización") || normalized.includes("especializacion") || normalized.includes("extendido")) return "extended";
     if (normalized.includes("1fn") || normalized.includes("2fn") || normalized.includes("3fn") || normalized.includes("normalización")) return "normalization";
     return "generic";
   }
@@ -134,8 +135,8 @@
   function detectTitle(text) {
     const normalized = clean(text);
     if (/casos de uso/i.test(normalized)) return "Diagrama de casos de uso";
+    if (/especializaci[oó]n|extendido|subclase/i.test(normalized)) return "Diagrama de Especialización/Generalización (EER)";
     if (/entidad-relaci[oó]n/i.test(normalized)) return "Diagrama Entidad-Relación";
-    if (/extendido|especializaci[oó]n/i.test(normalized)) return "Modelo conceptual extendido";
     if (/1fn/i.test(normalized)) return "Diagrama de Primera Forma Normal";
     if (/2fn/i.test(normalized)) return "Diagrama de Segunda Forma Normal";
     if (/3fn/i.test(normalized)) return "Diagrama de Tercera Forma Normal";
@@ -308,29 +309,117 @@
   }
 
   function extendedSvg(task, options) {
-    const w = options.width, h = options.height;
-    return svgWrap(w, h, options.fontSize, `
-      ${title("Modelo Conceptual Extendido", "Especialización de EMPLEADO", w)}
-      <rect x="${w / 2 - 145}" y="150" width="290" height="92" rx="8" fill="#ffffff" stroke="#334155" stroke-width="2"/>
-      <text x="${w / 2}" y="186" text-anchor="middle" class="entity-title dark">EMPLEADO</text>
-      <text x="${w / 2}" y="215" text-anchor="middle" class="label">Hereda: id_empleado, dni, nombres, apellidos, teléfono, correo</text>
-      <polygon points="${w / 2},315 ${w / 2 - 52},375 ${w / 2 + 52},375" fill="#e7f3f1" stroke="#0f766e" stroke-width="2"/>
-      <text x="${w / 2}" y="360" text-anchor="middle" class="label strong">d, parcial</text>
-      ${subclass(w / 2 - 390, 500, "MOZO")}
-      ${subclass(w / 2 - 110, 500, "CAJERO")}
-      ${subclass(w / 2 + 170, 500, "COCINERO")}
-      <line x1="${w / 2}" y1="242" x2="${w / 2}" y2="315" stroke="#475569" stroke-width="2"/>
-      <line x1="${w / 2 - 45}" y1="375" x2="${w / 2 - 250}" y2="500" stroke="#475569" stroke-width="2"/>
-      <line x1="${w / 2}" y1="375" x2="${w / 2}" y2="500" stroke="#475569" stroke-width="2"/>
-      <line x1="${w / 2 + 45}" y1="375" x2="${w / 2 + 280}" y2="500" stroke="#475569" stroke-width="2"/>
-      <text x="${w / 2}" y="690" text-anchor="middle" class="note">Especialización parcial y solapada según el documento. Las subclases heredan los atributos de EMPLEADO.</text>
-    `);
+    const fs = options.fontSize;
+    const superclassName = (extractList(task.instructions, "Superclase") || ["EMPLEADO"])[0];
+    const subclassNames = extractList(task.instructions, "Subclases") || ["MOZO", "CAJERO", "COCINERO"];
+    const rawAttributes = extractList(task.instructions, "Atributos de la superclase") || entityAttributes[superclassName] || [];
+    const attributes = rawAttributes.map(item => clean(item).replace(/^\s*(PK(\/FK)?|FK)\s+/i, "").trim()).filter(Boolean);
+
+    const headerH = 56;
+    const rowGap = 46;
+    const subclassW = 300;
+    const subclassH = headerH + 66;
+    const superW = 360;
+    const superTop = 124;
+    const superH = headerH + attributes.length * 26 + 18;
+    const superBottom = superTop + superH;
+    const circleR = 36;
+    const circleCy = superBottom + 96;
+    const rowTop = circleCy + 132;
+    const legendH = 118;
+    const legendTop = rowTop + subclassH + 50;
+
+    // Formato horizontal: se respeta el ancho solicitado y se garantiza el mínimo que evita solapamientos.
+    const w = Math.max(options.width, 1120);
+    const cx = w / 2;
+    const rowW = subclassNames.length * subclassW + (subclassNames.length - 1) * rowGap;
+    const rowLeft = cx - rowW / 2;
+    const contentH = legendTop + legendH + 30;
+    const h = Math.max(options.height, contentH, 800);
+    const offsetY = Math.max(0, (h - contentH) / 2);
+
+    const subclassPositions = subclassNames.map((name, index) => ({
+      name,
+      x: rowLeft + index * (subclassW + rowGap),
+      y: rowTop
+    }));
+
+    const connectors = subclassPositions.map(item => {
+      const endX = item.x + subclassW / 2;
+      const endY = item.y - 14;
+      return `<path d="M${cx},${circleCy + circleR} L${cx},${circleCy + circleR + 36} L${endX},${endY - 32} L${endX},${endY}" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>`;
+    }).join("");
+
+    const content = `
+      ${title("Modelo Conceptual Extendido", "Especialización y generalización · Sistema de Gestión de Restaurante", w)}
+      ${superclassBox(superclassName, attributes, cx - superW / 2, superTop, superW, superH, headerH)}
+      <line x1="${cx}" y1="${superBottom}" x2="${cx}" y2="${circleCy - circleR}" stroke="#334155" stroke-width="2"/>
+      ${connectors}
+      <circle cx="${cx}" cy="${circleCy}" r="${circleR}" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+      <text x="${cx}" y="${circleCy + 11}" text-anchor="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:${fs + 12}px;font-weight:700;fill:#0f766e">o</text>
+      ${tagPill(cx + circleR + 28, circleCy - 20, "Especialización parcial y solapada", fs)}
+      <text x="${cx + circleR + 34}" y="${circleCy + 26}" class="note">«o» = disyunción solapada · línea simple = completitud parcial</text>
+      ${subclassPositions.map(item => subclassBox(item, subclassW, subclassH, headerH, superclassName)).join("")}
+      ${specializationLegend(70, legendTop, w - 140, legendH, superclassName, subclassNames)}
+    `;
+
+    return svgWrap(w, h, fs, `<g transform="translate(0,${offsetY})">${content}</g>`);
   }
 
-  function subclass(x, y, name) {
-    return `<rect x="${x}" y="${y}" width="220" height="82" rx="8" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
-      <text x="${x + 110}" y="${y + 35}" text-anchor="middle" class="entity-title dark">${name}</text>
-      <text x="${x + 110}" y="${y + 62}" text-anchor="middle" class="label">Subclase de EMPLEADO</text>`;
+  function superclassBox(name, attributes, x, y, width, height, headerH) {
+    const centerX = x + width / 2;
+    const band = `M${x},${y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${headerH - 6} h${-width} z`;
+    const rows = attributes.map((attr, index) => {
+      const isKey = index === 0 || /^(pk|clave)\b/i.test(attr);
+      return `<text x="${x + 20}" y="${y + headerH + 34 + index * 26}" class="${isKey ? "key" : "label"}">${escapeSvg(attr)}${isKey ? "  (PK)" : ""}</text>`;
+    }).join("");
+    return `
+      <g>
+        <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="6" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+        <path d="${band}" fill="#0f766e"/>
+        <text x="${centerX}" y="${y + 22}" text-anchor="middle" class="stereotype">«SUPERCLASE»</text>
+        <text x="${centerX}" y="${y + 43}" text-anchor="middle" class="entity-title">${escapeSvg(name)}</text>
+        <line x1="${x}" y1="${y + headerH}" x2="${x + width}" y2="${y + headerH}" stroke="#334155" stroke-width="1"/>
+        ${rows}
+      </g>
+    `;
+  }
+
+  function subclassBox(item, width, height, headerH, superclassName) {
+    const centerX = item.x + width / 2;
+    const band = `M${item.x},${item.y + 6} a6,6 0 0 1 6,-6 h${width - 12} a6,6 0 0 1 6,6 v${headerH - 6} h${-width} z`;
+    return `
+      <g>
+        <rect x="${item.x}" y="${item.y}" width="${width}" height="${height}" rx="6" fill="#ffffff" stroke="#334155" stroke-width="2"/>
+        <path d="${band}" fill="#0f766e"/>
+        <text x="${centerX}" y="${item.y + 22}" text-anchor="middle" class="stereotype">«SUBCLASE»</text>
+        <text x="${centerX}" y="${item.y + 43}" text-anchor="middle" class="entity-title">${escapeSvg(item.name)}</text>
+        <text x="${centerX}" y="${item.y + headerH + 34}" text-anchor="middle" class="label strong">Hereda los atributos</text>
+        <text x="${centerX}" y="${item.y + headerH + 58}" text-anchor="middle" class="note">de la superclase ${escapeSvg(superclassName)}</text>
+      </g>
+    `;
+  }
+
+  function tagPill(x, y, text, fs) {
+    const width = Math.round(text.length * fs * 0.56) + 30;
+    return `
+      <g>
+        <rect x="${x}" y="${y}" width="${width}" height="40" rx="20" fill="#e7f3f1" stroke="#0f766e" stroke-width="1.5"/>
+        <text x="${x + width / 2}" y="${y + 26}" text-anchor="middle" style="font-family:Arial,Helvetica,sans-serif;font-size:${fs}px;font-weight:700;fill:#115e59">${escapeSvg(text)}</text>
+      </g>
+    `;
+  }
+
+  function specializationLegend(x, y, width, height, superclassName, subclassNames) {
+    return `
+      <g>
+        <rect x="${x}" y="${y}" width="${width}" height="${height}" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+        <text x="${x + 22}" y="${y + 30}" class="label strong">Notación de la especialización</text>
+        <text x="${x + 22}" y="${y + 56}" class="note">Círculo con «o»: disyunción solapada, es decir, un empleado puede pertenecer a más de una subclase a la vez.</text>
+        <text x="${x + 22}" y="${y + 80}" class="note">Línea simple entre la superclase y el círculo: completitud parcial, es decir, no todos los empleados deben pertenecer a alguna subclase.</text>
+        <text x="${x + 22}" y="${y + 104}" class="note">${escapeSvg(subclassNames.join(", "))} son subclases de ${escapeSvg(superclassName)} y heredan todos sus atributos.</text>
+      </g>
+    `;
   }
 
   function normalizationSvg(task, options) {
@@ -372,6 +461,7 @@
           .strong{font-weight:700}
           .entity-title{font-family:Arial,Helvetica,sans-serif;font-size:${fs + 2}px;font-weight:700;fill:#ffffff}
           .entity-title.dark{fill:#1d2733}
+          .stereotype{font-family:Arial,Helvetica,sans-serif;font-size:${Math.max(10, fs - 2)}px;font-weight:700;fill:#c6e7e3}
           .key{font-family:Arial,Helvetica,sans-serif;font-size:${fs}px;font-weight:700;fill:#0f766e}
           .cardinality{font-family:Arial,Helvetica,sans-serif;font-size:${fs - 1}px;font-weight:700;fill:#334155}
           .note{font-family:Arial,Helvetica,sans-serif;font-size:${Math.max(11, fs - 2)}px;fill:#64748b}

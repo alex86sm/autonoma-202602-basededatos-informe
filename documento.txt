@@ -401,10 +401,66 @@ Las subclases identificadas son:
 - **CAJERO**
 - **COCINERO**
 
-La estructura de especialización es:
+La especialización parte de la entidad **EMPLEADO**, definida como superclase, debido a que contiene los atributos comunes a todos los trabajadores del restaurante. A partir de esta superclase se identifican tres subclases: **MOZO**, **CAJERO** y **COCINERO**, las cuales representan funciones específicas dentro del sistema.
 
-```text
-                    EMPLEADO
-                   /    |    \
-                  /     |     \
-               MOZO   CAJERO  COCINERO
+La estructura propuesta corresponde a una especialización **parcial** y **solapada**. Es parcial porque no todos los empleados necesariamente deben pertenecer a las subclases definidas. Es solapada porque un mismo empleado puede desempeñar más de una función dentro del restaurante.
+
+### Herencia de atributos
+
+Las subclases **MOZO**, **CAJERO** y **COCINERO** heredan todos los atributos definidos en la superclase **EMPLEADO**, por lo que no es necesario repetir dichos atributos en cada subclase. Los atributos heredados son los siguientes:
+
+| Atributo | Clave | Descripción |
+|---|---|---|
+| id_empleado | PK | Identificador único del empleado. |
+| dni | — | Documento nacional de identidad del empleado. |
+| nombres | — | Nombres del empleado. |
+| apellidos | — | Apellidos del empleado. |
+| telefono | — | Teléfono de contacto del empleado. |
+| correo | — | Correo electrónico del empleado. |
+
+### Restricciones de la especialización
+
+| Restricción | Valor | Interpretación |
+|---|---|---|
+| Completitud | PARCIAL | No todos los empleados deben pertenecer a alguna de las subclases definidas. |
+| Disyunción | SOLAPADA | Un mismo empleado puede pertenecer a más de una subclase a la vez. |
+
+### Presentación del diagrama
+
+El siguiente diagrama representa la jerarquía de especialización y generalización definida para la entidad **EMPLEADO**. Se presenta la superclase con sus atributos, las subclases **MOZO**, **CAJERO** y **COCINERO**, y las restricciones de completitud parcial y disyunción solapada utilizando la notación académica de especialización.
+
+**Figura 2. Modelo Conceptual Extendido: especialización parcial y solapada de EMPLEADO.**
+
+#=====IMAGE====#
+
+Generar un **diagrama de Modelo Entidad-Relación Extendido (EER)** del Sistema de Gestión de Restaurante que represente la jerarquía de especialización y generalización de la entidad EMPLEADO.
+
+Superclase:
+- EMPLEADO
+
+Subclases:
+- MOZO
+- CAJERO
+- COCINERO
+
+Atributos de la superclase:
+- id_empleado
+- dni
+- nombres
+- apellidos
+- telefono
+- correo
+
+El diagrama debe indicar de forma explícita que:
+- EMPLEADO es la superclase.
+- MOZO, CAJERO y COCINERO son subclases de EMPLEADO.
+- Existe una relación de especialización y generalización entre la superclase y las subclases.
+- La especialización es PARCIAL.
+- La especialización es SOLAPADA.
+- Las subclases heredan los atributos de EMPLEADO.
+
+Utilizar la notación académica de especialización y generalización: un círculo de especialización con la letra "o" para la disyunción solapada y una línea simple para la completitud parcial, incluyendo la etiqueta "Especialización parcial y solapada" con su leyenda de lectura.
+
+No incluir actores UML, personajes ni elementos pertenecientes a otros diagramas del informe.
+
+#=====FINIMAGE====#
