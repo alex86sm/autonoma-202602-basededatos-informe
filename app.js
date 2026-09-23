@@ -134,6 +134,8 @@
 
   function detectTitle(text) {
     const normalized = clean(text);
+    const groupTitle = extractList(text, "Título del grupo");
+    if (groupTitle && groupTitle.length) return `Casos de uso · ${groupTitle[0]}`;
     if (/casos de uso/i.test(normalized)) return "Diagrama de casos de uso";
     if (/especializaci[oó]n|extendido|subclase/i.test(normalized)) return "Diagrama de Especialización/Generalización (EER)";
     if (/entidad-relaci[oó]n/i.test(normalized)) return "Diagrama Entidad-Relación";
@@ -211,33 +213,70 @@
   }
 
   function useCaseSvg(task, options) {
+    const fs = options.fontSize;
     const actors = extractList(task.instructions, "Actores") || Object.keys(actorUseCases);
     const cases = extractList(task.instructions, "Casos de uso") || [...new Set(Object.values(actorUseCases).flat())];
-    const w = options.width, h = options.height, fs = options.fontSize;
-    const casePositions = cases.map((name, index) => {
-      const col = index % 2;
-      const row = Math.floor(index / 2);
-      return { name, x: 480 + col * 310, y: 170 + row * 105 };
+    const groupTitle = (extractList(task.instructions, "Título del grupo") || ["Diagrama UML de Casos de Uso"])[0];
+
+    // Cada figura cubre sólo el grupo: el tamaño y la distribución se calculan a partir de su contenido.
+    const columns = cases.length <= 2 ? Math.max(cases.length, 1) : 2;
+    const rows = Math.ceil(cases.length / columns);
+    const colGap = 320, rowGap = 104, caseRx = 132, caseRy = 34;
+    const boundaryTop = 108, boundaryX = 260;
+    const boundaryH = rows * rowGap + 118;
+    const w = Math.max(options.width, 520 + columns * colGap + 60);
+    const caseX0 = w / 2 - ((columns - 1) * colGap) / 2;
+
+    const casePositions = cases.map((name, index) => ({
+      name,
+      x: caseX0 + (index % columns) * colGap,
+      y: boundaryTop + 106 + Math.floor(index / columns) * rowGap
+    }));
+
+    // Cada actor se ubica en el lado hacia el que apuntan sus asociaciones y se ordena por altura para reducir cruces.
+    const actorInfo = new Map();
+    actors.forEach((name, index) => {
+      const targets = casePositions.filter(item => (actorUseCases[name] || []).includes(item.name));
+      actorInfo.set(name, {
+        avgX: targets.length ? targets.reduce((sum, item) => sum + item.x, 0) / targets.length : -1,
+        avgY: targets.length ? targets.reduce((sum, item) => sum + item.y, 0) / targets.length : index * 152
+      });
     });
-    const actorPositions = actors.map((name, index) => {
-      const left = index < Math.ceil(actors.length / 2);
-      const row = left ? index : index - Math.ceil(actors.length / 2);
-      return { name, x: left ? 120 : w - 120, y: 180 + row * 130, side: left ? "left" : "right" };
+    const ordered = actors.slice().sort((a, b) => (actorInfo.get(a).avgX - actorInfo.get(b).avgX) || (actorInfo.get(a).avgY - actorInfo.get(b).avgY));
+    const leftCount = Math.ceil(ordered.length / 2);
+    const sides = {
+      left: ordered.slice(0, leftCount).sort((a, b) => actorInfo.get(a).avgY - actorInfo.get(b).avgY),
+      right: ordered.slice(leftCount).sort((a, b) => actorInfo.get(a).avgY - actorInfo.get(b).avgY)
+    };
+    const actorPositions = [];
+    ["left", "right"].forEach(side => {
+      const list = sides[side];
+      const step = 152;
+      const total = (list.length - 1) * step;
+      const startY = boundaryTop + Math.max(84, (boundaryH - total) / 2 - 45);
+      list.forEach((name, index) => {
+        actorPositions.push({ name, side, x: side === "left" ? 132 : w - 132, y: startY + index * step });
+      });
     });
+
     const links = [];
     actorPositions.forEach(actor => {
-      (actorUseCases[actor.name] || cases.slice(0, 2)).forEach(useCase => {
+      (actorUseCases[actor.name] || []).forEach(useCase => {
         const target = casePositions.find(item => item.name === useCase);
         if (target) links.push([actor, target]);
       });
     });
+
+    const actorsBottom = actorPositions.reduce((max, item) => Math.max(max, item.y + 118), 0);
+    const h = Math.max(boundaryTop + boundaryH + 70, actorsBottom + 50, 480);
+
     return svgWrap(w, h, fs, `
-      ${title("Diagrama UML de Casos de Uso", "Sistema de Gestión de Restaurante", w)}
-      <rect x="310" y="105" width="${w - 620}" height="${h - 180}" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
-      <text x="${w / 2}" y="135" text-anchor="middle" class="label strong">Sistema de Gestión de Restaurante</text>
+      ${title(groupTitle, "Sistema de Gestión de Restaurante", w)}
+      <rect x="${boundaryX}" y="${boundaryTop}" width="${w - 2 * boundaryX}" height="${boundaryH}" rx="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+      <text x="${w / 2}" y="${boundaryTop + 32}" text-anchor="middle" class="label strong">Sistema de Gestión de Restaurante</text>
       ${links.map(([a, c]) => `<line x1="${a.x}" y1="${a.y + 25}" x2="${c.x}" y2="${c.y}" stroke="#64748b" stroke-width="1.5"/>`).join("")}
       ${casePositions.map(item => `
-        <ellipse cx="${item.x}" cy="${item.y}" rx="125" ry="36" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
+        <ellipse cx="${item.x}" cy="${item.y}" rx="${caseRx}" ry="${caseRy}" fill="#ffffff" stroke="#0f766e" stroke-width="2"/>
         <text x="${item.x}" y="${item.y + 5}" text-anchor="middle" class="label">${escapeSvg(item.name)}</text>
       `).join("")}
       ${actorPositions.map(actorSvg).join("")}

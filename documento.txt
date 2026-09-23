@@ -79,7 +79,9 @@ Estas reglas se implementan mediante las entidades, atributos, claves y relacion
 
 ## 1.3 Casos de uso principales
 
-### Descripción de los casos de uso que la base de datos debe soportar
+La base de datos debe soportar las principales operaciones de información del sistema: la gestión de las personas que intervienen en la atención (clientes y empleados), la gestión del establecimiento (mesas y reservas), la gestión del catálogo ofrecido (productos y categorías) y las operaciones diarias de atención al cliente (pedidos, pagos y consulta de ventas). Los casos de uso descritos a continuación permiten identificar qué operaciones se realizan sobre la información y qué entidades del modelo conceptual intervienen en cada una de ellas.
+
+### Tabla resumen de casos de uso
 
 | Código | Caso de uso | Descripción |
 |---|---|---|
@@ -94,31 +96,287 @@ Estas reglas se implementan mediante las entidades, atributos, claves y relacion
 | CU-09 | Gestionar empleados | Permite registrar y consultar información de los empleados. |
 | CU-10 | Consultar ventas | Permite consultar información relacionada con pedidos y pagos. |
 
+### CU-01 – Gestionar clientes
+
+Descripción:
+Permite registrar, consultar y actualizar la información de los clientes atendidos en el restaurante, evitando duplicidad de datos personales.
+
+Usuario involucrado:
+- Recepcionista.
+
+Información gestionada:
+- dni
+- nombres
+- apellidos
+- telefono
+- correo
+
+Información que interviene en la base de datos:
+- CLIENTE (entidad principal del caso de uso).
+- RESERVA y PEDIDO (registros que quedan asociados al cliente mediante id_cliente).
+
+### CU-02 – Gestionar reservas
+
+Descripción:
+Permite registrar las reservas solicitadas por los clientes y consultar su estado a lo largo del tiempo.
+
+Usuario involucrado:
+- Recepcionista.
+- Cliente.
+
+Información gestionada:
+- fecha_reserva
+- hora_reserva
+- cantidad_personas
+- estado (Pendiente, Confirmada, Cancelada, Atendida)
+
+Información que interviene en la base de datos:
+- RESERVA (entidad principal del caso de uso).
+- CLIENTE (a través de id_cliente).
+- MESA (a través de id_mesa, según la regla RN-03).
+
+### CU-03 – Gestionar mesas
+
+Descripción:
+Permite registrar las mesas del restaurante y consultar su disponibilidad y estado actual.
+
+Usuario involucrado:
+- Recepcionista.
+- Administrador.
+
+Información gestionada:
+- numero_mesa
+- capacidad
+- estado (Disponible, Reservada, Ocupada)
+
+Información que interviene en la base de datos:
+- MESA (entidad principal del caso de uso).
+- RESERVA (referencia la mesa asignada a cada reserva).
+
+### CU-04 – Gestionar productos
+
+Descripción:
+Permite registrar y actualizar los productos ofrecidos por el restaurante, así como su disponibilidad y precio.
+
+Usuario involucrado:
+- Administrador.
+
+Información gestionada:
+- nombre_producto
+- descripcion
+- precio
+- estado (Disponible, No disponible)
+- id_categoria
+
+Información que interviene en la base de datos:
+- PRODUCTO (entidad principal del caso de uso).
+- CATEGORIA (a través de id_categoria, según la regla RN-10).
+- DETALLE_PEDIDO (registra el producto dentro de cada pedido).
+
+### CU-05 – Gestionar categorías
+
+Descripción:
+Permite administrar las categorías que agrupan los productos, manteniendo esta información separada para evitar duplicidad de datos.
+
+Usuario involucrado:
+- Administrador.
+
+Información gestionada:
+- nombre_categoria
+- descripcion
+
+Información que interviene en la base de datos:
+- CATEGORIA (entidad principal del caso de uso).
+- PRODUCTO (los productos se clasifican en una categoría, según la regla RN-14).
+
+### CU-06 – Registrar pedido
+
+Descripción:
+Permite registrar un pedido asociado a un cliente y a un empleado, incluyendo los productos solicitados con su cantidad y precio unitario.
+
+Usuario involucrado:
+- Mozo.
+- Cliente.
+
+Información gestionada:
+- fecha_pedido
+- hora_pedido
+- estado (Pendiente, En preparación, Listo, Entregado, Cancelado)
+- cantidad y precio_unitario de cada producto solicitado
+
+Información que interviene en la base de datos:
+- PEDIDO (entidad principal del caso de uso).
+- CLIENTE (a través de id_cliente).
+- EMPLEADO (a través de id_empleado, según la regla RN-07).
+- DETALLE_PEDIDO y PRODUCTO (detalle de los productos incluidos en el pedido).
+
+### CU-07 – Consultar pedido
+
+Descripción:
+Permite consultar los productos incluidos en un pedido y su estado actual de atención.
+
+Usuario involucrado:
+- Mozo.
+- Cajero.
+- Cocinero.
+
+Información gestionada:
+- estado del pedido
+- productos solicitados
+- cantidad y precio_unitario de cada detalle
+
+Información que interviene en la base de datos:
+- PEDIDO (entidad principal del caso de uso).
+- DETALLE_PEDIDO y PRODUCTO (detalle de lo solicitado).
+- EMPLEADO y CLIENTE (empleado que registró el pedido y cliente que lo solicitó).
+
+### CU-08 – Registrar pago
+
+Descripción:
+Permite registrar el pago correspondiente a un pedido, indicando el monto, el método utilizado y su estado.
+
+Usuario involucrado:
+- Cajero.
+
+Información gestionada:
+- fecha_pago
+- monto
+- metodo_pago (Efectivo, Tarjeta, Transferencia)
+- estado (Pendiente, Pagado, Anulado)
+
+Información que interviene en la base de datos:
+- PAGO (entidad principal del caso de uso).
+- PEDIDO (a través de id_pedido, según la regla RN-12).
+
+### CU-09 – Gestionar empleados
+
+Descripción:
+Permite registrar y consultar la información de los empleados del restaurante, considerando que pueden desempeñar diferentes funciones.
+
+Usuario involucrado:
+- Administrador.
+
+Información gestionada:
+- dni
+- nombres
+- apellidos
+- telefono
+- correo
+
+Información que interviene en la base de datos:
+- EMPLEADO (entidad principal del caso de uso).
+- PEDIDO (los pedidos registrados por el empleado, según la regla RN-13).
+
+### CU-10 – Consultar ventas
+
+Descripción:
+Permite consultar la información relacionada con los pedidos registrados y los pagos realizados, con el fin de revisar el movimiento del restaurante.
+
+Usuario involucrado:
+- Administrador.
+- Cajero.
+
+Información gestionada:
+- fecha y hora de los pedidos
+- monto y metodo_pago de los pagos
+- estado del pago
+- productos y cantidades vendidas
+
+Información que interviene en la base de datos:
+- PEDIDO (entidad principal de la consulta).
+- PAGO (monto y estado de los pagos, relación 1:1 con el pedido).
+- DETALLE_PEDIDO y PRODUCTO (productos y cantidades vendidas).
+
+### Representación visual de los casos de uso
+
+Las figuras siguientes organizan los diez casos de uso en cuatro grupos conceptuales, con el fin de facilitar su lectura. Cada figura muestra únicamente los actores y los casos de uso que intervienen en el grupo correspondiente.
+
+**Figura. Gestión de personas del sistema.**
+
 #=====IMAGE====#
 
-Generar un **diagrama de casos de uso** para un Sistema de Gestión de Restaurante.
+Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de gestión de personas.
+
+Título del grupo:
+- Gestión de personas
 
 Actores:
-- Administrador
 - Recepcionista
-- Mozo
-- Cajero
-- Cocinero
-- Cliente
+- Administrador
 
 Casos de uso:
 - Gestionar clientes
+- Gestionar empleados
+
+La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
+
+#=====FINIMAGE====#
+
+**Figura. Gestión del establecimiento.**
+
+#=====IMAGE====#
+
+Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de gestión del establecimiento.
+
+Título del grupo:
+- Gestión del establecimiento
+
+Actores:
+- Recepcionista
+- Cliente
+- Administrador
+
+Casos de uso:
 - Gestionar reservas
 - Gestionar mesas
+
+La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
+
+#=====FINIMAGE====#
+
+**Figura. Gestión de productos.**
+
+#=====IMAGE====#
+
+Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de gestión de productos.
+
+Título del grupo:
+- Gestión de productos
+
+Actores:
+- Administrador
+
+Casos de uso:
 - Gestionar productos
 - Gestionar categorías
+
+La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
+
+#=====FINIMAGE====#
+
+**Figura. Operaciones principales del restaurante.**
+
+#=====IMAGE====#
+
+Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de operaciones principales.
+
+Título del grupo:
+- Operaciones principales
+
+Actores:
+- Mozo
+- Cliente
+- Cocinero
+- Cajero
+- Administrador
+
+Casos de uso:
 - Registrar pedido
 - Consultar pedido
 - Registrar pago
-- Gestionar empleados
 - Consultar ventas
 
-El diagrama debe mostrar claramente las asociaciones entre los actores y los casos de uso.
+La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
 
 #=====FINIMAGE====#
 
