@@ -129,7 +129,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-01 – Gestionar clientes.**
+**Figura 1. Caso de uso CU-01 – Gestionar clientes.**
 
 ---
 
@@ -168,7 +168,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-02 – Gestionar reservas.**
+**Figura 2. Caso de uso CU-02 – Gestionar reservas.**
 
 ---
 
@@ -205,7 +205,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-03 – Gestionar mesas.**
+**Figura 3. Caso de uso CU-03 – Gestionar mesas.**
 
 ---
 
@@ -243,7 +243,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-04 – Gestionar productos.**
+**Figura 4. Caso de uso CU-04 – Gestionar productos.**
 
 ---
 
@@ -277,7 +277,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-05 – Gestionar categorías.**
+**Figura 5. Caso de uso CU-05 – Gestionar categorías.**
 
 ---
 
@@ -317,7 +317,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-06 – Registrar pedido.**
+**Figura 6. Caso de uso CU-06 – Registrar pedido.**
 
 ---
 
@@ -357,7 +357,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-07 – Consultar pedido.**
+**Figura 7. Caso de uso CU-07 – Consultar pedido.**
 
 ---
 
@@ -393,7 +393,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-08 – Registrar pago.**
+**Figura 8. Caso de uso CU-08 – Registrar pago.**
 
 ---
 
@@ -430,7 +430,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-09 – Gestionar empleados.**
+**Figura 9. Caso de uso CU-09 – Gestionar empleados.**
 
 ---
 
@@ -469,7 +469,7 @@ El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera d
 
 #=====FINIMAGE====#
 
-**Figura. Caso de uso CU-10 – Consultar ventas.**
+**Figura 10. Caso de uso CU-10 – Consultar ventas.**
 
 
 # 2. Modelo Conceptual: Diagrama Entidad-Relación
@@ -693,7 +693,7 @@ El siguiente diagrama presenta el **Modelo Entidad-Relación** del Sistema de Ge
 
 La entidad **DETALLE_PEDIDO** permite resolver la relación muchos a muchos existente conceptualmente entre **PEDIDO** y **PRODUCTO**.
 
-**Figura 1. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.**
+**Figura 11. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.**
 
 #=====IMAGE====#
 
@@ -750,9 +750,26 @@ Las subclases identificadas son:
 - **CAJERO**
 - **COCINERO**
 
+### Justificación de las jerarquías de herencia
+
 La especialización parte de la entidad **EMPLEADO**, definida como superclase, debido a que contiene los atributos comunes a todos los trabajadores del restaurante. A partir de esta superclase se identifican tres subclases: **MOZO**, **CAJERO** y **COCINERO**, las cuales representan funciones específicas dentro del sistema.
 
-La estructura propuesta corresponde a una especialización **parcial** y **solapada**. Es parcial porque no todos los empleados necesariamente deben pertenecer a las subclases definidas. Es solapada porque un mismo empleado puede desempeñar más de una función dentro del restaurante.
+## 3.2 Aplicación de restricciones
+
+La estructura propuesta corresponde a una especialización **parcial** y **solapada**.
+
+| Restricción | Valor | Interpretación |
+|---|---|---|
+| Completitud | PARCIAL | No todos los empleados deben pertenecer a alguna de las subclases definidas. |
+| Disyunción | SOLAPADA | Un mismo empleado puede pertenecer a más de una subclase a la vez. |
+
+### Restricciones de completitud
+
+Es parcial porque no todos los empleados necesariamente deben pertenecer a las subclases definidas.
+
+### Restricciones de disyunción
+
+Es solapada porque un mismo empleado puede desempeñar más de una función dentro del restaurante.
 
 ### Herencia de atributos
 
@@ -767,18 +784,13 @@ Las subclases **MOZO**, **CAJERO** y **COCINERO** heredan todos los atributos de
 | telefono | — | Teléfono de contacto del empleado. |
 | correo | — | Correo electrónico del empleado. |
 
-### Restricciones de la especialización
-
-| Restricción | Valor | Interpretación |
-|---|---|---|
-| Completitud | PARCIAL | No todos los empleados deben pertenecer a alguna de las subclases definidas. |
-| Disyunción | SOLAPADA | Un mismo empleado puede pertenecer a más de una subclase a la vez. |
+## 3.3 Diagrama ER Extendido
 
 ### Presentación del diagrama
 
 El siguiente diagrama representa la jerarquía de especialización y generalización definida para la entidad **EMPLEADO**. Se presenta la superclase con sus atributos, las subclases **MOZO**, **CAJERO** y **COCINERO**, y las restricciones de completitud parcial y disyunción solapada utilizando la notación académica de especialización.
 
-**Figura 2. Modelo Conceptual Extendido: especialización parcial y solapada de EMPLEADO.**
+**Figura 12. Modelo Conceptual Extendido: especialización parcial y solapada de EMPLEADO.**
 
 #=====IMAGE====#
 

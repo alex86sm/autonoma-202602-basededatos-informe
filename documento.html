@@ -272,7 +272,7 @@
 <li><strong>RESERVA</strong> y <strong>PEDIDO</strong> (registros que quedan asociados al cliente mediante id_cliente).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu01">
-  <figcaption>Figura. Caso de uso CU-01 &ndash; Gestionar clientes.</figcaption>
+  <figcaption>Figura 1. Caso de uso CU-01 &ndash; Gestionar clientes.</figcaption>
 </figure>
 <h3>CU-02 &ndash; Gestionar reservas</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar las reservas solicitadas por los clientes y consultar su estado a lo largo del tiempo.</p>
@@ -295,7 +295,7 @@
 <li><strong>MESA</strong> (a trav&eacute;s de id_mesa, seg&uacute;n la regla RN-03).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu02">
-  <figcaption>Figura. Caso de uso CU-02 &ndash; Gestionar reservas.</figcaption>
+  <figcaption>Figura 2. Caso de uso CU-02 &ndash; Gestionar reservas.</figcaption>
 </figure>
 <h3>CU-03 &ndash; Gestionar mesas</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar las mesas del restaurante y consultar su disponibilidad y estado actual.</p>
@@ -316,7 +316,7 @@
 <li><strong>RESERVA</strong> (referencia la mesa asignada a cada reserva).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu03">
-  <figcaption>Figura. Caso de uso CU-03 &ndash; Gestionar mesas.</figcaption>
+  <figcaption>Figura 3. Caso de uso CU-03 &ndash; Gestionar mesas.</figcaption>
 </figure>
 <h3>CU-04 &ndash; Gestionar productos</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar y actualizar los productos ofrecidos por el restaurante, as&iacute; como su disponibilidad y precio.</p>
@@ -339,7 +339,7 @@
 <li><strong>DETALLE_PEDIDO</strong> (registra el producto dentro de cada pedido).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu04">
-  <figcaption>Figura. Caso de uso CU-04 &ndash; Gestionar productos.</figcaption>
+  <figcaption>Figura 4. Caso de uso CU-04 &ndash; Gestionar productos.</figcaption>
 </figure>
 <h3>CU-05 &ndash; Gestionar categor&iacute;as</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite administrar las categor&iacute;as que agrupan los productos, manteniendo esta informaci&oacute;n separada para evitar duplicidad de datos.</p>
@@ -358,7 +358,7 @@
 <li><strong>PRODUCTO</strong> (los productos se clasifican en una categor&iacute;a, seg&uacute;n la regla RN-14).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu05">
-  <figcaption>Figura. Caso de uso CU-05 &ndash; Gestionar categor&iacute;as.</figcaption>
+  <figcaption>Figura 5. Caso de uso CU-05 &ndash; Gestionar categor&iacute;as.</figcaption>
 </figure>
 <h3>CU-06 &ndash; Registrar pedido</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar un pedido asociado a un cliente y a un empleado, incluyendo los productos solicitados con su cantidad y precio unitario.</p>
@@ -382,7 +382,7 @@
 <li><strong>DETALLE_PEDIDO</strong> y <strong>PRODUCTO</strong> (detalle de los productos incluidos en el pedido).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu06">
-  <figcaption>Figura. Caso de uso CU-06 &ndash; Registrar pedido.</figcaption>
+  <figcaption>Figura 6. Caso de uso CU-06 &ndash; Registrar pedido.</figcaption>
 </figure>
 <h3>CU-07 &ndash; Consultar pedido</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite consultar los productos incluidos en un pedido y su estado actual de atenci&oacute;n.</p>
@@ -405,7 +405,7 @@
 <li><strong>EMPLEADO</strong> y <strong>CLIENTE</strong> (empleado que registr&oacute; el pedido y cliente que lo solicit&oacute;).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu07">
-  <figcaption>Figura. Caso de uso CU-07 &ndash; Consultar pedido.</figcaption>
+  <figcaption>Figura 7. Caso de uso CU-07 &ndash; Consultar pedido.</figcaption>
 </figure>
 <h3>CU-08 &ndash; Registrar pago</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar el pago correspondiente a un pedido, indicando el monto, el m&eacute;todo utilizado y su estado.</p>
@@ -426,7 +426,7 @@
 <li><strong>PEDIDO</strong> (a trav&eacute;s de id_pedido, seg&uacute;n la regla RN-12).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu08">
-  <figcaption>Figura. Caso de uso CU-08 &ndash; Registrar pago.</figcaption>
+  <figcaption>Figura 8. Caso de uso CU-08 &ndash; Registrar pago.</figcaption>
 </figure>
 <h3>CU-09 &ndash; Gestionar empleados</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar y consultar la informaci&oacute;n de los empleados del restaurante, considerando que pueden desempe&ntilde;ar diferentes funciones.</p>
@@ -448,7 +448,7 @@
 <li><strong>PEDIDO</strong> (los pedidos registrados por el empleado, seg&uacute;n la regla RN-13).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu09">
-  <figcaption>Figura. Caso de uso CU-09 &ndash; Gestionar empleados.</figcaption>
+  <figcaption>Figura 9. Caso de uso CU-09 &ndash; Gestionar empleados.</figcaption>
 </figure>
 <h3>CU-10 &ndash; Consultar ventas</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite consultar la informaci&oacute;n relacionada con los pedidos registrados y los pagos realizados, con el fin de revisar el movimiento del restaurante.</p>
@@ -471,7 +471,7 @@
 <li><strong>DETALLE_PEDIDO</strong> y <strong>PRODUCTO</strong> (productos y cantidades vendidas).</li>
 </ul>
 <figure class="generated-figure" data-diagram="usecase-cu10">
-  <figcaption>Figura. Caso de uso CU-10 &ndash; Consultar ventas.</figcaption>
+  <figcaption>Figura 10. Caso de uso CU-10 &ndash; Consultar ventas.</figcaption>
 </figure>
 <h1>2. Modelo Conceptual: Diagrama Entidad-Relación</h1>
 <h2>2.1 Identificación de entidades</h2>
@@ -684,9 +684,9 @@
 <h3>Presentación del diagrama</h3>
 <p>El siguiente diagrama presenta el <strong>Modelo Entidad-Relación</strong> del Sistema de Gestión de Restaurante, mostrando las principales entidades, atributos, claves y relaciones identificadas a partir de los requerimientos del sistema. Las cardinalidades permiten representar cómo interactúan las entidades dentro del dominio.</p>
 <p>La entidad <strong>DETALLE_PEDIDO</strong> permite resolver la relación muchos a muchos existente conceptualmente entre <strong>PEDIDO</strong> y <strong>PRODUCTO</strong>.</p>
-<p><strong>Figura 1. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.</strong></p>
+<p><strong>Figura 11. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.</strong></p>
 <figure class="generated-figure" data-diagram="er">
-  <figcaption>Figura 1. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.</figcaption>
+  <figcaption>Figura 11. Diagrama Entidad-Relación del Sistema de Gestión de Restaurante.</figcaption>
 </figure>
 <h3>Herramienta utilizada</h3>
 <p>Para la elaboración del diagrama Entidad-Relación se utilizó <strong>dbdiagram.io</strong>, herramienta que permite representar visualmente las entidades, atributos y relaciones de una base de datos mediante código DBML.</p>
@@ -704,8 +704,21 @@
 <li><strong>CAJERO</strong></li>
 <li><strong>COCINERO</strong></li>
 </ul>
+<h3>Justificaci&oacute;n de las jerarqu&iacute;as de herencia</h3>
 <p>La especializaci&oacute;n parte de la entidad <strong>EMPLEADO</strong>, definida como superclase, debido a que contiene los atributos comunes a todos los trabajadores del restaurante. A partir de esta superclase se identifican tres subclases: <strong>MOZO</strong>, <strong>CAJERO</strong> y <strong>COCINERO</strong>, las cuales representan funciones espec&iacute;ficas dentro del sistema.</p>
-<p>La estructura propuesta corresponde a una especializaci&oacute;n <strong>parcial</strong> y <strong>solapada</strong>. Es parcial porque no todos los empleados necesariamente deben pertenecer a las subclases definidas. Es solapada porque un mismo empleado puede desempe&ntilde;ar m&aacute;s de una funci&oacute;n dentro del restaurante.</p>
+<h2>3.2 Aplicaci&oacute;n de restricciones</h2>
+<p>La estructura propuesta corresponde a una especializaci&oacute;n <strong>parcial</strong> y <strong>solapada</strong>.</p>
+<table>
+<thead><tr><th>Restricci&oacute;n</th><th>Valor</th><th>Interpretaci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>Completitud</td><td>PARCIAL</td><td>No todos los empleados deben pertenecer a alguna de las subclases definidas.</td></tr>
+<tr><td>Disyunci&oacute;n</td><td>SOLAPADA</td><td>Un mismo empleado puede pertenecer a m&aacute;s de una subclase a la vez.</td></tr>
+</tbody>
+</table>
+<h3>Restricciones de completitud</h3>
+<p>Es parcial porque no todos los empleados necesariamente deben pertenecer a las subclases definidas.</p>
+<h3>Restricciones de disyunci&oacute;n</h3>
+<p>Es solapada porque un mismo empleado puede desempe&ntilde;ar m&aacute;s de una funci&oacute;n dentro del restaurante.</p>
 <h3>Herencia de atributos</h3>
 <p>Las subclases <strong>MOZO</strong>, <strong>CAJERO</strong> y <strong>COCINERO</strong> heredan todos los atributos definidos en la superclase <strong>EMPLEADO</strong>, por lo que no es necesario repetir dichos atributos en cada subclase. Los atributos heredados son los siguientes:</p>
 <table>
@@ -719,19 +732,12 @@
 <tr><td>correo</td><td>&mdash;</td><td>Correo electr&oacute;nico del empleado.</td></tr>
 </tbody>
 </table>
-<h3>Restricciones de la especializaci&oacute;n</h3>
-<table>
-<thead><tr><th>Restricci&oacute;n</th><th>Valor</th><th>Interpretaci&oacute;n</th></tr></thead>
-<tbody>
-<tr><td>Completitud</td><td>PARCIAL</td><td>No todos los empleados deben pertenecer a alguna de las subclases definidas.</td></tr>
-<tr><td>Disyunci&oacute;n</td><td>SOLAPADA</td><td>Un mismo empleado puede pertenecer a m&aacute;s de una subclase a la vez.</td></tr>
-</tbody>
-</table>
+<h2>3.3 Diagrama ER Extendido</h2>
 <h3>Presentaci&oacute;n del diagrama</h3>
 <p>El siguiente diagrama representa la jerarqu&iacute;a de especializaci&oacute;n y generalizaci&oacute;n definida para la entidad <strong>EMPLEADO</strong>. Se presenta la superclase con sus atributos, las subclases <strong>MOZO</strong>, <strong>CAJERO</strong> y <strong>COCINERO</strong>, y las restricciones de completitud parcial y disyunci&oacute;n solapada utilizando la notaci&oacute;n acad&eacute;mica de especializaci&oacute;n.</p>
-<p><strong>Figura 2. Modelo Conceptual Extendido: especializaci&oacute;n parcial y solapada de EMPLEADO.</strong></p>
+<p><strong>Figura 12. Modelo Conceptual Extendido: especializaci&oacute;n parcial y solapada de EMPLEADO.</strong></p>
 <figure class="generated-figure" data-diagram="extended">
-  <figcaption>Figura 2. Modelo Conceptual Extendido: especializaci&oacute;n parcial y solapada de EMPLEADO.</figcaption>
+  <figcaption>Figura 12. Modelo Conceptual Extendido: especializaci&oacute;n parcial y solapada de EMPLEADO.</figcaption>
 </figure>
 <h1>4. Normalizaci&oacute;n de Esquemas Relacionales</h1>
 <p>En esta secci&oacute;n se normaliza la informaci&oacute;n del Sistema de Gesti&oacute;n de Restaurante definida en las secciones anteriores. El punto de partida no es un ejemplo gen&eacute;rico: es la forma en que el restaurante registra hoy sus datos, mediante <strong>dos hojas consolidadas</strong> (PEDIDOS y RESERVAS) en las que los datos del cliente, del empleado, de la mesa, de los productos, de la categor&iacute;a y del pago se repiten una y otra vez. A partir de ese esquema inicial se aplican, una por una, la <strong>Primera</strong>, <strong>Segunda</strong> y <strong>Tercera Forma Normal</strong>, mostrando en cada etapa la tabla <em>antes</em> y las tablas <em>despu&eacute;s</em> de la descomposici&oacute;n.</p>
@@ -740,7 +746,7 @@
 <p class="p4-nota"><strong>Simbolog&iacute;a utilizada en todo el punto 4:</strong>  PK = Clave primaria &nbsp;&middot;&nbsp;  FK = Clave for&aacute;nea &nbsp;&middot;&nbsp; cuando la clave primaria es compuesta se marca  PK en cada uno de sus atributos.</p>
 
 <h2>4.1 Esquema inicial (sin normalizar)</h2>
-<p>La empresa no cuenta todav&iacute;a con una base de datos: la informaci&oacute;n se mantiene en dos hojas de c&aacute;lculo consolidadas. Cada fila de la hoja <strong>PEDIDOS</strong> contiene un pedido completo junto con los datos del cliente, del empleado que lo atiende, del pago y los productos solicitados; cada fila de la hoja <strong>RESERVAS</strong> contiene una reserva con los datos del cliente y de la mesa asignada.</p>
+<p>El restaurante no cuenta todav&iacute;a con una base de datos: la informaci&oacute;n se mantiene en dos hojas de c&aacute;lculo consolidadas. Cada fila de la hoja <strong>PEDIDOS</strong> contiene un pedido completo junto con los datos del cliente, del empleado que lo atiende, del pago y los productos solicitados; cada fila de la hoja <strong>RESERVAS</strong> contiene una reserva con los datos del cliente y de la mesa asignada.</p>
 
 <h3>4.1.1 Estructura de la hoja consolidada PEDIDOS</h3>
 <table class="p4">
