@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrante 4 - Guion de exposicion oral</title>
+<style>
+  body {
+    max-width: 820px;
+    margin: 28px auto;
+    padding: 0 26px 40px;
+    color: #111827;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+    line-height: 1.55;
+    background: #ffffff;
+  }
+  h1 {
+    margin: 0 0 6px;
+    font-size: 20pt;
+    color: #0f172a;
+  }
+  h2 {
+    margin: 26px 0 10px;
+    font-size: 13pt;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #0f766e;
+    border-bottom: 1px solid #d8dee7;
+    padding-bottom: 4px;
+  }
+  .datos {
+    margin: 0 0 4px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #d8dee7;
+    font-size: 11.5pt;
+  }
+  .datos strong { color: #0f172a; }
+  .guion p { margin: 0 0 13px; }
+  .ind {
+    margin: 10px 0 12px;
+    color: #0f766e;
+    font-size: 10.5pt;
+    font-style: italic;
+  }
+  .transicion {
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-left: 4px solid #0f766e;
+  }
+  .transicion p { margin: 0; }
+  @media print {
+    body { margin: 0; max-width: none; font-size: 12pt; }
+  }
+</style>
+</head>
+<body>
+<h1>INTEGRANTE 4</h1>
+<p class="datos">
+  <strong>Tiempo:</strong> 1 minuto 45 segundos<br>
+  <strong>Tema:</strong> 3. Modelo Conceptual Extendido: especializaci&oacute;n y generalizaci&oacute;n
+</p>
+
+<h2>Guion de exposici&oacute;n</h2>
+<div class="guion">
+  <p>Ahora explico la especializaci&oacute;n y generalizaci&oacute;n del modelo.</p>
+
+  <p class="ind">[Mostrar 3.1 Identificaci&oacute;n de jerarqu&iacute;as]</p>
+
+  <p>Tomamos la entidad EMPLEADO como superclase, porque concentra los atributos comunes a todos los trabajadores del restaurante: el identificador, el dni, los nombres, los apellidos, el tel&eacute;fono y el correo. A partir de ella se identifican tres subclases: MOZO, CAJERO y COCINERO, que representan funciones espec&iacute;ficas dentro del sistema. La raz&oacute;n es simple: todos los empleados comparten los mismos datos personales, pero no todos cumplen la misma funci&oacute;n, as&iacute; que representamos las funciones sin repetir esos datos.</p>
+
+  <p class="ind">[Mostrar 3.2 Aplicaci&oacute;n de restricciones]</p>
+
+  <p>La especializaci&oacute;n tiene dos restricciones. Es parcial, porque no todos los empleados necesariamente pertenecen a las subclases definidas: puede haber empleados que no sean ni mozo, ni cajero, ni cocinero. Y es solapada, porque un mismo empleado puede desempe&ntilde;ar m&aacute;s de una funci&oacute;n, por ejemplo atender mesas y tambi&eacute;n cobrar.</p>
+
+  <p class="ind">[Se&ntilde;alar la secci&oacute;n de herencia de atributos]</p>
+
+  <p>Sobre la herencia: las subclases heredan todos los atributos de EMPLEADO, as&iacute; que no hace falta repetirlos en cada una. Por eso las subclases solo indican que heredan los atributos de la superclase.</p>
+
+  <p class="ind">[Mostrar 3.3 y se&ntilde;alar el diagrama ER Extendido - Figura 12]</p>
+
+  <p>En el diagrama se ve la superclase EMPLEADO con sus atributos, el c&iacute;rculo de especializaci&oacute;n con la letra "o", que indica que es solapada, y la l&iacute;nea simple, que indica que es parcial. Debajo est&aacute;n las tres subclases conectadas a la especializaci&oacute;n.</p>
+</div>
+
+<h2>Transici&oacute;n al siguiente integrante</h2>
+<div class="transicion">
+  <p>Una vez definido el modelo conceptual y su especializaci&oacute;n, el siguiente paso consiste en revisar c&oacute;mo se organiza la informaci&oacute;n y eliminar redundancias mediante el proceso de normalizaci&oacute;n.</p>
+</div>
+</body>
+</html>

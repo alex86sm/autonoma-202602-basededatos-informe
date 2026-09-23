@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Integrante 2 - Guion de exposicion oral</title>
+<style>
+  body {
+    max-width: 820px;
+    margin: 28px auto;
+    padding: 0 26px 40px;
+    color: #111827;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 13pt;
+    line-height: 1.55;
+    background: #ffffff;
+  }
+  h1 {
+    margin: 0 0 6px;
+    font-size: 20pt;
+    color: #0f172a;
+  }
+  h2 {
+    margin: 26px 0 10px;
+    font-size: 13pt;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: #0f766e;
+    border-bottom: 1px solid #d8dee7;
+    padding-bottom: 4px;
+  }
+  .datos {
+    margin: 0 0 4px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border: 1px solid #d8dee7;
+    font-size: 11.5pt;
+  }
+  .datos strong { color: #0f172a; }
+  .guion p { margin: 0 0 13px; }
+  .ind {
+    margin: 10px 0 12px;
+    color: #0f766e;
+    font-size: 10.5pt;
+    font-style: italic;
+  }
+  .transicion {
+    padding: 12px 16px;
+    background: #f8fafc;
+    border-left: 4px solid #0f766e;
+  }
+  .transicion p { margin: 0; }
+  @media print {
+    body { margin: 0; max-width: none; font-size: 12pt; }
+  }
+</style>
+</head>
+<body>
+<h1>INTEGRANTE 2</h1>
+<p class="datos">
+  <strong>Tiempo:</strong> 2 minutos<br>
+  <strong>Tema:</strong> 2. Entidades y atributos del modelo Entidad-Relaci&oacute;n
+</p>
+
+<h2>Guion de exposici&oacute;n</h2>
+<div class="guion">
+  <p>Contin&uacute;o con el modelo conceptual, empezando por la identificaci&oacute;n de entidades.</p>
+
+  <p class="ind">[Mostrar 2.1 y se&ntilde;alar la lista de entidades]</p>
+
+  <p>Se identificaron nueve entidades. CLIENTE almacena la informaci&oacute;n de las personas que hacen reservas y pedidos. EMPLEADO representa al personal del restaurante. MESA representa los espacios f&iacute;sicos, y RESERVA registra las solicitudes de reserva. CATEGORIA sirve para clasificar los productos, y PRODUCTO representa los alimentos y bebidas que se ofrecen. PEDIDO representa la solicitud de productos de un cliente, DETALLE_PEDIDO registra los productos incluidos en cada pedido con sus cantidades y precios, y PAGO registra el pago asociado a un pedido.</p>
+
+  <p class="ind">[Mostrar 2.2 Especificaci&oacute;n de atributos]</p>
+
+  <p>Cada entidad tiene su identificador y sus datos. CLIENTE y EMPLEADO comparten atributos como dni, nombres, apellidos, tel&eacute;fono y correo, pero se mantienen separadas porque representan a personas distintas. MESA tiene n&uacute;mero, capacidad y estado; RESERVA tiene fecha, hora, cantidad de personas y estado; PRODUCTO tiene nombre, descripci&oacute;n, precio y estado; y PEDIDO tiene fecha, hora y estado.</p>
+
+  <p class="ind">[Se&ntilde;alar la tabla de claves primarias]</p>
+
+  <p>Las claves primarias son simples en casi todos los casos: por ejemplo, id_cliente, id_pedido o id_producto.</p>
+
+  <p class="ind">[Se&ntilde;alar DETALLE_PEDIDO en la tabla de atributos]</p>
+
+  <p>La excepci&oacute;n es DETALLE_PEDIDO, donde la clave es compuesta: id_pedido e id_producto. Se usa esa combinaci&oacute;n porque un mismo producto puede estar en varios pedidos y un pedido puede tener varios productos; la pareja pedido-producto identifica de forma &uacute;nica cada l&iacute;nea del pedido, y ah&iacute; se guardan la cantidad y el precio unitario.</p>
+
+  <p class="ind">[Se&ntilde;alar la tabla de dominios]</p>
+
+  <p>Tambi&eacute;n definimos dominios: los identificadores son enteros positivos, el estado de la mesa solo admite disponible, reservada u ocupada, y el m&eacute;todo de pago puede ser efectivo, tarjeta o transferencia.</p>
+</div>
+
+<h2>Transici&oacute;n al siguiente integrante</h2>
+<div class="transicion">
+  <p>Una vez identificadas las entidades y los datos que almacena cada una, el siguiente paso es determinar c&oacute;mo se relacionan entre s&iacute; dentro del modelo.</p>
+</div>
+</body>
+</html>
