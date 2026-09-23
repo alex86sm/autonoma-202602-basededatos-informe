@@ -94,6 +94,73 @@
       font-style: italic;
       text-align: center;
     }
+    /* --- Estilos aislados del punto 4: Normalizacion de Esquemas Relacionales --- */
+    /* Son clases propias (p4-*) y no modifican los estilos de las secciones anteriores. */
+    .p4-flujo {
+      margin: 14px 0;
+      text-align: center;
+      font-weight: bold;
+      font-size: 10.5pt;
+      color: #0f766e;
+    }
+    .p4-etapa {
+      display: inline-block;
+      margin: 4px 0 8px;
+      padding: 3px 12px;
+      font-size: 10.5pt;
+      font-weight: bold;
+      border: 1px solid #cbd5e1;
+    }
+    .p4-antes {
+      background: #fee2e2;
+      color: #991b1b;
+      border-color: #fca5a5;
+    }
+    .p4-despues {
+      background: #dcfce7;
+      color: #166534;
+      border-color: #86efac;
+    }
+    .p4-scroll {
+      overflow-x: auto;
+      margin: 12px 0 18px;
+    }
+    .p4-scroll table {
+      margin: 0;
+    }
+    table.p4 th, table.p4 td {
+      font-size: 9.5pt;
+      padding: 5px 6px;
+    }
+    table.p4 td.p4-nowrap {
+      white-space: nowrap;
+    }
+    .p4-pk {
+      color: #0f766e;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .p4-fk {
+      color: #b45309;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .p4-nota {
+      margin: 10px 0 18px;
+      padding: 10px 12px;
+      border-left: 4px solid #0f766e;
+      background: #f8fafc;
+      font-size: 10.5pt;
+    }
+    .p4-clave {
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 10pt;
+    }
+    .p4-titulo-tabla {
+      margin: 16px 0 6px;
+      font-size: 10.5pt;
+      color: #0f766e;
+    }
     @media print {
       body {
         margin: 0;
@@ -666,6 +733,510 @@
 <figure class="generated-figure" data-diagram="extended">
   <figcaption>Figura 2. Modelo Conceptual Extendido: especializaci&oacute;n parcial y solapada de EMPLEADO.</figcaption>
 </figure>
+<h1>4. Normalizaci&oacute;n de Esquemas Relacionales</h1>
+<p>En esta secci&oacute;n se normaliza la informaci&oacute;n del Sistema de Gesti&oacute;n de Restaurante definida en las secciones anteriores. El punto de partida no es un ejemplo gen&eacute;rico: es la forma en que el restaurante registra hoy sus datos, mediante <strong>dos hojas consolidadas</strong> (PEDIDOS y RESERVAS) en las que los datos del cliente, del empleado, de la mesa, de los productos, de la categor&iacute;a y del pago se repiten una y otra vez. A partir de ese esquema inicial se aplican, una por una, la <strong>Primera</strong>, <strong>Segunda</strong> y <strong>Tercera Forma Normal</strong>, mostrando en cada etapa la tabla <em>antes</em> y las tablas <em>despu&eacute;s</em> de la descomposici&oacute;n.</p>
+<p>El proceso completo es el siguiente:</p>
+<p class="p4-flujo">ESQUEMA INICIAL &nbsp;&darr;&nbsp; 1FN &nbsp;&darr;&nbsp; 2FN &nbsp;&darr;&nbsp; 3FN</p>
+<p class="p4-nota"><strong>Simbolog&iacute;a utilizada en todo el punto 4:</strong>  PK = Clave primaria &nbsp;&middot;&nbsp;  FK = Clave for&aacute;nea &nbsp;&middot;&nbsp; cuando la clave primaria es compuesta se marca  PK en cada uno de sus atributos.</p>
+
+<h2>4.1 Esquema inicial (sin normalizar)</h2>
+<p>La empresa no cuenta todav&iacute;a con una base de datos: la informaci&oacute;n se mantiene en dos hojas de c&aacute;lculo consolidadas. Cada fila de la hoja <strong>PEDIDOS</strong> contiene un pedido completo junto con los datos del cliente, del empleado que lo atiende, del pago y los productos solicitados; cada fila de la hoja <strong>RESERVAS</strong> contiene una reserva con los datos del cliente y de la mesa asignada.</p>
+
+<h3>4.1.1 Estructura de la hoja consolidada PEDIDOS</h3>
+<table class="p4">
+<thead><tr><th>Bloque de informaci&oacute;n</th><th>Campos que contiene</th></tr></thead>
+<tbody>
+<tr><td>Pedido</td><td>id_pedido, fecha_pedido, hora_pedido, estado_pedido</td></tr>
+<tr><td>Cliente</td><td>id_cliente, dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td></tr>
+<tr><td>Empleado</td><td>id_empleado, dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td></tr>
+<tr><td>Producto solicitado (<strong>grupo repetitivo</strong>)</td><td>id_producto_1, nombre_producto_1, descripcion_producto_1, precio_producto_1, estado_producto_1, id_categoria_1, nombre_categoria_1, descripcion_categoria_1, cantidad_1, precio_unitario_1 &nbsp;&hellip; y las mismas columnas repetidas para el 2.&ordm; y 3.<sup>er</sup> producto del pedido</td></tr>
+<tr><td>Pago</td><td>id_pago, fecha_pago, monto, metodo_pago, estado_pago</td></tr>
+</tbody>
+</table>
+
+<h3>4.1.2 Estructura de la hoja consolidada RESERVAS</h3>
+<table class="p4">
+<thead><tr><th>Bloque de informaci&oacute;n</th><th>Campos que contiene</th></tr></thead>
+<tbody>
+<tr><td>Reserva</td><td>id_reserva, fecha_reserva, hora_reserva, cantidad_personas, estado_reserva</td></tr>
+<tr><td>Cliente</td><td>id_cliente, dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td></tr>
+<tr><td>Mesa</td><td>id_mesa, numero_mesa, capacidad, estado_mesa</td></tr>
+</tbody>
+</table>
+
+<h3>4.1.3 Datos de ejemplo de la hoja PEDIDOS</h3>
+<div class="p4-scroll">
+<table class="p4">
+<thead><tr>
+<th>id_pedido</th><th>fecha_pedido</th><th>id_cliente</th><th>nombres_cliente</th><th>id_empleado</th><th>nombres_empleado</th>
+<th>producto_1</th><th>cantidad_1</th><th>precio_unitario_1</th>
+<th>producto_2</th><th>cantidad_2</th><th>precio_unitario_2</th>
+<th>producto_3</th><th>cantidad_3</th><th>precio_unitario_3</th>
+<th>id_pago</th><th>monto</th>
+</tr></thead>
+<tbody>
+<tr><td>PE01</td><td>12/09/2026</td><td>C01</td><td>Ana Torres</td><td>E01</td><td>Luis Rojas</td><td>P05</td><td>2</td><td>28.00</td><td>P09</td><td>2</td><td>8.50</td><td>P12</td><td>1</td><td>12.00</td><td>PG01</td><td>85.00</td></tr>
+<tr><td>PE02</td><td>12/09/2026</td><td>C02</td><td>Marco D&iacute;az</td><td>E02</td><td>Rosa N&uacute;&ntilde;ez</td><td>P05</td><td>1</td><td>28.00</td><td>P07</td><td>1</td><td>9.00</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>PG02</td><td>37.00</td></tr>
+<tr><td>PE03</td><td>13/09/2026</td><td>C01</td><td>Ana Torres</td><td>E01</td><td>Luis Rojas</td><td>P05</td><td>1</td><td>28.00</td><td>P09</td><td>1</td><td>8.50</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4.1.4 Datos de ejemplo de la hoja RESERVAS</h3>
+<div class="p4-scroll">
+<table class="p4">
+<thead><tr>
+<th>id_reserva</th><th>fecha_reserva</th><th>hora_reserva</th><th>cantidad_personas</th><th>estado_reserva</th>
+<th>id_cliente</th><th>dni_cliente</th><th>nombres_cliente</th><th>apellidos_cliente</th><th>telefono_cliente</th>
+<th>id_mesa</th><th>numero_mesa</th><th>capacidad</th><th>estado_mesa</th>
+</tr></thead>
+<tbody>
+<tr><td>R01</td><td>13/09/2026</td><td>20:00</td><td>4</td><td>Confirmada</td><td>C02</td><td>41236578</td><td>Marco</td><td>D&iacute;az</td><td>912345678</td><td>M01</td><td>1</td><td>4</td><td>Reservada</td></tr>
+<tr><td>R02</td><td>14/09/2026</td><td>13:00</td><td>2</td><td>Pendiente</td><td>C01</td><td>45871236</td><td>Ana</td><td>Torres</td><td>987654321</td><td>M02</td><td>2</td><td>2</td><td>Disponible</td></tr>
+<tr><td>R03</td><td>13/09/2026</td><td>21:00</td><td>4</td><td>Confirmada</td><td>C02</td><td>41236578</td><td>Marco</td><td>D&iacute;az</td><td>912345678</td><td>M01</td><td>1</td><td>4</td><td>Reservada</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4.1.5 Problemas detectados en el esquema inicial</h3>
+<table class="p4">
+<thead><tr><th>Problema</th><th>Forma normal que incumple</th><th>D&oacute;nde se presenta</th></tr></thead>
+<tbody>
+<tr><td>Grupo repetitivo de productos</td><td>1FN</td><td>Hoja PEDIDOS: las columnas <span class="p4-clave">producto_1&hellip;producto_3</span>, <span class="p4-clave">cantidad_1&hellip;cantidad_3</span> y <span class="p4-clave">precio_unitario_1&hellip;precio_unitario_3</span> se repiten dentro de la misma fila.</td></tr>
+<tr><td>Atributo multivalorado <em>productos solicitados</em></td><td>1FN</td><td>Hoja PEDIDOS: un pedido contiene varios productos (regla RN-08), pero no existe un atributo &uacute;nico que pueda almacenarlos.</td></tr>
+<tr><td>Datos del cliente repetidos en cada fila</td><td>2FN y 3FN</td><td>Hoja PEDIDOS (filas PE01 y PE03 repiten a la clienta C01) y hoja RESERVAS (filas R01 y R03 repiten a C02 y a la mesa M01).</td></tr>
+<tr><td>Datos del empleado repetidos</td><td>3FN</td><td>Hoja PEDIDOS: el empleado E01 aparece completo en PE01 y en PE03.</td></tr>
+<tr><td>Datos del producto y de su categor&iacute;a repetidos</td><td>2FN y 3FN</td><td>Hoja PEDIDOS: el producto P05 y su categor&iacute;a se repiten en los tres pedidos.</td></tr>
+<tr><td>Datos de la mesa repetidos</td><td>3FN</td><td>Hoja RESERVAS: la mesa M01 se repite en R01 y R03.</td></tr>
+<tr><td>Datos del pago repetidos</td><td>3FN</td><td>Hoja PEDIDOS: el monto y el m&eacute;todo de pago se guardan junto al pedido, duplicando informaci&oacute;n que pertenece al pago.</td></tr>
+</tbody>
+</table>
+<p>Estos problemas producen <strong>redundancia</strong> (los mismos datos escritos muchas veces), riesgo de <strong>inconsistencia</strong> (al actualizar el tel&eacute;fono de un cliente habr&iacute;a que modificarlo en todas las filas) y <strong>anomal&iacute;as de inserci&oacute;n y borrado</strong> (no se puede registrar un producto si todav&iacute;a no forma parte de un pedido).</p>
+
+<h2>4.2 Primera Forma Normal (1FN)</h2>
+<p>Una tabla est&aacute; en <strong>Primera Forma Normal</strong> si todos sus atributos son <strong>at&oacute;micos</strong> (un solo valor por celda, sin listas ni conjuntos) y si <strong>no existen grupos repetitivos</strong> (columnas que se repiten para representar varios valores del mismo tipo).</p>
+
+<h3>4.2.1 Identificaci&oacute;n de violaciones a 1FN</h3>
+<table class="p4">
+<thead><tr><th>Violaci&oacute;n</th><th>Evidencia en el esquema inicial</th><th>Correcci&oacute;n aplicada</th></tr></thead>
+<tbody>
+<tr><td>Grupo repetitivo</td><td>Tres bloques de columnas id&eacute;nticos (<span class="p4-clave">producto_1</span>&hellip;, <span class="p4-clave">producto_2</span>&hellip;, <span class="p4-clave">producto_3</span>&hellip;) para representar hasta tres productos del mismo pedido.</td><td>Se eliminan las columnas repetidas: cada producto pasa a ser una <strong>fila</strong> de la tabla <span class="p4-clave">DETALLE_PEDIDO</span>.</td></tr>
+<tr><td>Atributo multivalorado</td><td>El concepto <em>productos solicitados</em> guarda un conjunto de productos; la regla RN-08 indica que un pedido puede contener uno o varios productos.</td><td>El conjunto se convierte en filas independientes (una por producto solicitado).</td></tr>
+<tr><td>Mezcla de entidades en una misma fila</td><td>La fila contiene datos del pedido, del cliente, del empleado, del producto, de la categor&iacute;a y del pago.</td><td>No es una violaci&oacute;n de 1FN, pero es el origen de las dependencias parciales y transitivas que se corrigen en 2FN y 3FN.</td></tr>
+</tbody>
+</table>
+
+<h3>4.2.2 Grupo repetitivo identificado</h3>
+<p>La siguiente tabla muestra &uacute;nicamente las columnas que se repiten en la hoja PEDIDOS, con los mismos datos de ejemplo:</p>
+<div class="p4-scroll">
+<table class="p4">
+<thead><tr>
+<th>id_pedido</th>
+<th>producto_1</th><th>cantidad_1</th><th>precio_unitario_1</th>
+<th>producto_2</th><th>cantidad_2</th><th>precio_unitario_2</th>
+<th>producto_3</th><th>cantidad_3</th><th>precio_unitario_3</th>
+</tr></thead>
+<tbody>
+<tr><td>PE01</td><td>P05</td><td>2</td><td>28.00</td><td>P09</td><td>2</td><td>8.50</td><td>P12</td><td>1</td><td>12.00</td></tr>
+<tr><td>PE02</td><td>P05</td><td>1</td><td>28.00</td><td>P07</td><td>1</td><td>9.00</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+<tr><td>PE03</td><td>P05</td><td>1</td><td>28.00</td><td>P09</td><td>1</td><td>8.50</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+<p>El problema de este dise&ntilde;o es doble: (a) existe un l&iacute;mite f&iacute;sico de productos por pedido (tres) y (b) las columnas <span class="p4-clave">&hellip;_2</span> y <span class="p4-clave">&hellip;_3</span> quedan vac&iacute;as (<span class="p4-clave">&mdash;</span>) en los pedidos con menos productos, desperdiciando espacio y complicando las consultas.</p>
+
+<h3>4.2.3 Atributo multivalorado identificado</h3>
+<p>El atributo <em>productos solicitados</em> es <strong>multivalorado</strong>: un pedido puede llevar varios productos. En una tabla normalizada no puede almacenarse como una lista.</p>
+<table class="p4">
+<thead><tr><th>id_pedido</th><th>productos_solicitados (multivalorado)</th><th>Representaci&oacute;n correcta</th></tr></thead>
+<tbody>
+<tr><td>PE01</td><td>{ P05, P09, P12 }</td><td>3 filas en DETALLE_PEDIDO</td></tr>
+<tr><td>PE02</td><td>{ P05, P07 }</td><td>2 filas en DETALLE_PEDIDO</td></tr>
+<tr><td>PE03</td><td>{ P05, P09 }</td><td>2 filas en DETALLE_PEDIDO</td></tr>
+</tbody>
+</table>
+
+<h3>4.2.4 Transformaci&oacute;n a 1FN</h3>
+<p><span class="p4-etapa p4-antes">ANTES DE 1FN</span></p>
+<p>Tabla de partida: <strong>hoja PEDIDOS</strong>, con el grupo repetitivo de productos.</p>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Observaci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td>Identificador del pedido.</td></tr>
+<tr><td>fecha_pedido / hora_pedido</td><td>Fecha / Hora</td><td>Datos del pedido.</td></tr>
+<tr><td>estado_pedido</td><td>Cadena</td><td>Pendiente, En preparaci&oacute;n, Listo, Entregado, Cancelado.</td></tr>
+<tr><td>id_cliente, dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>Entero / Cadena</td><td>Datos del cliente repetidos en cada pedido.</td></tr>
+<tr><td>id_empleado, dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>Entero / Cadena</td><td>Datos del empleado repetidos en cada pedido.</td></tr>
+<tr><td>id_producto_1, nombre_producto_1, descripcion_producto_1, precio_producto_1, estado_producto_1, id_categoria_1, nombre_categoria_1, descripcion_categoria_1, cantidad_1, precio_unitario_1</td><td>&mdash;</td><td><strong>Grupo repetitivo</strong> (1.<sup>er</sup> producto). No permite un n&uacute;mero variable de productos.</td></tr>
+<tr><td>id_producto_2 &hellip; precio_unitario_2</td><td>&mdash;</td><td><strong>Grupo repetitivo</strong> (2.&ordm; producto).</td></tr>
+<tr><td>id_producto_3 &hellip; precio_unitario_3</td><td>&mdash;</td><td><strong>Grupo repetitivo</strong> (3.<sup>er</sup> producto).</td></tr>
+<tr><td>id_pago, fecha_pago, monto, metodo_pago, estado_pago</td><td>Entero / Fecha / Decimal / Cadena</td><td>Datos del pago repetidos en cada pedido.</td></tr>
+</tbody>
+</table>
+<p class="p4-flujo">&darr; DESCOMPOSICI&Oacute;N: se elimina el grupo repetitivo y se convierte el atributo multivalorado en filas &darr;</p>
+<p><span class="p4-etapa p4-despues">DESPU&Eacute;S DE 1FN</span></p>
+<p>La clave primaria pasa a ser <strong>compuesta</strong>: <span class="p4-clave">(id_pedido, id_producto)</span>, porque un mismo pedido aparece en tantas filas como productos contenga.</p>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Origen</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td><span class="p4-pk"> PK</span> (parte)</td><td>Pedido</td></tr>
+<tr><td>id_producto</td><td>Entero</td><td><span class="p4-pk"> PK</span> (parte)</td><td>Grupo repetitivo (ahora at&oacute;mico)</td></tr>
+<tr><td>fecha_pedido</td><td>Fecha</td><td>&mdash;</td><td>Pedido</td></tr>
+<tr><td>hora_pedido</td><td>Hora</td><td>&mdash;</td><td>Pedido</td></tr>
+<tr><td>estado_pedido</td><td>Cadena</td><td>&mdash;</td><td>Pedido</td></tr>
+<tr><td>id_cliente</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>Cliente</td></tr>
+<tr><td>dni_cliente</td><td>Cadena</td><td>&mdash;</td><td>Cliente</td></tr>
+<tr><td>nombres_cliente / apellidos_cliente</td><td>Cadena</td><td>&mdash;</td><td>Cliente</td></tr>
+<tr><td>telefono_cliente / correo_cliente</td><td>Cadena</td><td>&mdash;</td><td>Cliente</td></tr>
+<tr><td>id_empleado</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>Empleado</td></tr>
+<tr><td>dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>Cadena</td><td>&mdash;</td><td>Empleado</td></tr>
+<tr><td>nombre_producto</td><td>Cadena</td><td>&mdash;</td><td>Producto</td></tr>
+<tr><td>descripcion_producto</td><td>Cadena</td><td>&mdash;</td><td>Producto</td></tr>
+<tr><td>precio_producto</td><td>Decimal</td><td>&mdash;</td><td>Producto</td></tr>
+<tr><td>estado_producto</td><td>Cadena</td><td>&mdash;</td><td>Producto</td></tr>
+<tr><td>id_categoria</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>Categor&iacute;a</td></tr>
+<tr><td>nombre_categoria / descripcion_categoria</td><td>Cadena</td><td>&mdash;</td><td>Categor&iacute;a</td></tr>
+<tr><td>cantidad</td><td>Entero</td><td>&mdash;</td><td>Grupo repetitivo (ahora at&oacute;mico)</td></tr>
+<tr><td>precio_unitario</td><td>Decimal</td><td>&mdash;</td><td>Grupo repetitivo (ahora at&oacute;mico)</td></tr>
+<tr><td>id_pago</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>Pago</td></tr>
+<tr><td>fecha_pago, monto, metodo_pago, estado_pago</td><td>Fecha / Decimal / Cadena</td><td>&mdash;</td><td>Pago</td></tr>
+</tbody>
+</table>
+<p>Resultado: la tabla <span class="p4-clave">PEDIDO_1FN</span> ya cumple 1FN porque <strong>cada celda contiene un solo valor</strong> y <strong>no quedan columnas repetidas</strong>. Los datos de ejemplo quedan as&iacute;:</p>
+<div class="p4-scroll">
+<table class="p4">
+<thead><tr><th>id_pedido </th><th>id_producto </th><th>fecha_pedido</th><th>nombres_cliente</th><th>nombre_empleado</th><th>nombre_producto</th><th>cantidad</th><th>precio_unitario</th><th>monto</th></tr></thead>
+<tbody>
+<tr><td>PE01</td><td>P05</td><td>12/09/2026</td><td>Ana Torres</td><td>Luis Rojas</td><td>Lomo saltado</td><td>2</td><td>28.00</td><td>85.00</td></tr>
+<tr><td>PE01</td><td>P09</td><td>12/09/2026</td><td>Ana Torres</td><td>Luis Rojas</td><td>Chicha morada</td><td>2</td><td>8.50</td><td>85.00</td></tr>
+<tr><td>PE01</td><td>P12</td><td>12/09/2026</td><td>Ana Torres</td><td>Luis Rojas</td><td>Ensalada fresca</td><td>1</td><td>12.00</td><td>85.00</td></tr>
+<tr><td>PE02</td><td>P05</td><td>12/09/2026</td><td>Marco D&iacute;az</td><td>Rosa N&uacute;&ntilde;ez</td><td>Lomo saltado</td><td>1</td><td>28.00</td><td>37.00</td></tr>
+<tr><td>PE02</td><td>P07</td><td>12/09/2026</td><td>Marco D&iacute;az</td><td>Rosa N&uacute;&ntilde;ez</td><td>Arroz con leche</td><td>1</td><td>9.00</td><td>37.00</td></tr>
+<tr><td>PE03</td><td>P05</td><td>13/09/2026</td><td>Ana Torres</td><td>Luis Rojas</td><td>Lomo saltado</td><td>1</td><td>28.00</td><td>&mdash;</td></tr>
+<tr><td>PE03</td><td>P09</td><td>13/09/2026</td><td>Ana Torres</td><td>Luis Rojas</td><td>Chicha morada</td><td>1</td><td>8.50</td><td>&mdash;</td></tr>
+</tbody>
+</table>
+</div>
+<p class="p4-nota">Se observa que la tabla cumple 1FN, pero <strong>todav&iacute;a hay mucha redundancia</strong>: los datos de la clienta Ana Torres, del empleado Luis Rojas y del producto Lomo saltado se repiten en cada fila. Esa redundancia se debe a las <strong>dependencias parciales</strong> que se eliminan en 2FN.</p>
+
+<h3>4.2.5 La hoja RESERVAS ya cumple 1FN</h3>
+<p>En la hoja RESERVAS cada celda contiene un solo valor y <strong>no existen grupos repetitivos</strong> (un cliente reserva una mesa en una fecha y hora determinadas). Por lo tanto, ya cumple la Primera Forma Normal y no requiere descomposici&oacute;n en esta etapa:</p>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Observaci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>id_reserva</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>Identificador &uacute;nico de la reserva.</td></tr>
+<tr><td>fecha_reserva</td><td>Fecha</td><td>&mdash;</td><td>Fecha de la reserva.</td></tr>
+<tr><td>hora_reserva</td><td>Hora</td><td>&mdash;</td><td>Hora de la reserva.</td></tr>
+<tr><td>cantidad_personas</td><td>Entero</td><td>&mdash;</td><td>Cantidad de personas (valor at&oacute;mico).</td></tr>
+<tr><td>estado_reserva</td><td>Cadena</td><td>&mdash;</td><td>Pendiente, Confirmada, Cancelada, Atendida.</td></tr>
+<tr><td>id_cliente</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>Cliente que reserva.</td></tr>
+<tr><td>dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>Cadena</td><td>&mdash;</td><td>Datos del cliente (se eliminar&aacute;n en 3FN).</td></tr>
+<tr><td>id_mesa</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>Mesa asignada.</td></tr>
+<tr><td>numero_mesa, capacidad, estado_mesa</td><td>Entero / Cadena</td><td>&mdash;</td><td>Datos de la mesa (se eliminar&aacute;n en 3FN).</td></tr>
+</tbody>
+</table>
+
+<h2>4.3 Segunda Forma Normal (2FN)</h2>
+<p>Una tabla est&aacute; en <strong>Segunda Forma Normal</strong> si cumple 1FN y, adem&aacute;s, <strong>todos los atributos que no forman parte de la clave dependen de la clave primaria completa</strong>. Cuando la clave es compuesta, un atributo que dependa solo de una parte de ella genera una <strong>dependencia parcial</strong>, que es lo que esta etapa elimina.</p>
+
+<h3>4.3.1 Claves primarias del esquema en 1FN</h3>
+<table class="p4">
+<thead><tr><th>Tabla</th><th>Clave primaria</th><th>Tipo de clave</th><th>Atributos no clave</th></tr></thead>
+<tbody>
+<tr><td>PEDIDO_1FN</td><td><span class="p4-clave">(id_pedido, id_producto)</span></td><td><strong>Compuesta</strong> (dos atributos)</td><td>fecha_pedido, hora_pedido, estado_pedido, datos del cliente, datos del empleado, datos del producto, datos de la categor&iacute;a, cantidad, precio_unitario, datos del pago</td></tr>
+<tr><td>RESERVA_1FN</td><td><span class="p4-clave">id_reserva</span></td><td>Simple</td><td>fecha_reserva, hora_reserva, cantidad_personas, estado_reserva, datos del cliente, datos de la mesa</td></tr>
+</tbody>
+</table>
+<p>La <strong>&uacute;nica clave compuesta</strong> del esquema es <span class="p4-clave">(id_pedido, id_producto)</span>. Precisamente por eso, PEDIDO_1FN es la tabla candidata a tener dependencias parciales; RESERVA_1FN, al tener clave simple, no puede tenerlas.</p>
+
+<h3>4.3.2 Dependencias funcionales identificadas</h3>
+<table class="p4">
+<thead><tr><th>Dependencia funcional</th><th>Tabla</th><th>Tipo</th></tr></thead>
+<tbody>
+<tr><td>id_pedido &rarr; fecha_pedido, hora_pedido, estado_pedido</td><td>PEDIDO_1FN</td><td>Dependencia <strong>parcial</strong> (solo de una parte de la clave compuesta)</td></tr>
+<tr><td>id_pedido &rarr; id_cliente, id_empleado, id_pago</td><td>PEDIDO_1FN</td><td>Dependencia <strong>parcial</strong></td></tr>
+<tr><td>id_producto &rarr; nombre_producto, descripcion_producto, precio_producto, estado_producto, id_categoria</td><td>PEDIDO_1FN</td><td>Dependencia <strong>parcial</strong></td></tr>
+<tr><td>(id_pedido, id_producto) &rarr; cantidad, precio_unitario</td><td>PEDIDO_1FN</td><td>Dependencia <strong>total</strong> (requiere la clave completa)</td></tr>
+<tr><td>id_cliente &rarr; dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>PEDIDO_1FN y RESERVA_1FN</td><td>Dependencia <strong>transitiva</strong> (se corrige en 3FN)</td></tr>
+<tr><td>id_empleado &rarr; dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>PEDIDO_1FN</td><td>Dependencia <strong>transitiva</strong></td></tr>
+<tr><td>id_categoria &rarr; nombre_categoria, descripcion_categoria</td><td>PEDIDO_1FN</td><td>Dependencia <strong>transitiva</strong></td></tr>
+<tr><td>id_pago &rarr; fecha_pago, monto, metodo_pago, estado_pago</td><td>PEDIDO_1FN</td><td>Dependencia <strong>transitiva</strong></td></tr>
+<tr><td>id_reserva &rarr; fecha_reserva, hora_reserva, cantidad_personas, estado_reserva, id_cliente, id_mesa</td><td>RESERVA_1FN</td><td>Dependencia <strong>total</strong></td></tr>
+<tr><td>id_mesa &rarr; numero_mesa, capacidad, estado_mesa</td><td>RESERVA_1FN</td><td>Dependencia <strong>transitiva</strong></td></tr>
+</tbody>
+</table>
+
+<h3>4.3.3 Dependencias parciales detectadas</h3>
+<p>En PEDIDO_1FN la clave es <span class="p4-clave">(id_pedido, id_producto)</span>, de modo que los atributos que dependen de <strong>una sola parte</strong> de la clave est&aacute;n parcialmente dependientes y deben salir de la tabla:</p>
+<table class="p4">
+<thead><tr><th>Atributos afectados</th><th>Dependen solo de</th><th>Tipo de dependencia</th><th>Acci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>fecha_pedido, hora_pedido, estado_pedido</td><td><span class="p4-clave">id_pedido</span></td><td>Parcial</td><td>Pasan a la tabla PEDIDO_2FN</td></tr>
+<tr><td>id_cliente, dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td><span class="p4-clave">id_pedido</span></td><td>Parcial</td><td>Pasan a PEDIDO_2FN (en 3FN se separar&aacute;n a CLIENTE)</td></tr>
+<tr><td>id_empleado, dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td><span class="p4-clave">id_pedido</span></td><td>Parcial</td><td>Pasan a PEDIDO_2FN (en 3FN se separar&aacute;n a EMPLEADO)</td></tr>
+<tr><td>id_pago, fecha_pago, monto, metodo_pago, estado_pago</td><td><span class="p4-clave">id_pedido</span></td><td>Parcial</td><td>Pasan a PEDIDO_2FN (en 3FN se separar&aacute;n a PAGO)</td></tr>
+<tr><td>nombre_producto, descripcion_producto, precio_producto, estado_producto</td><td><span class="p4-clave">id_producto</span></td><td>Parcial</td><td>Pasan a la tabla PRODUCTO_2FN</td></tr>
+<tr><td>id_categoria, nombre_categoria, descripcion_categoria</td><td><span class="p4-clave">id_producto</span></td><td>Parcial</td><td>Pasan a PRODUCTO_2FN (en 3FN se separar&aacute; CATEGORIA)</td></tr>
+<tr><td>cantidad, precio_unitario</td><td><span class="p4-clave">(id_pedido, id_producto)</span></td><td><strong>Total</strong> (correcta)</td><td>Permanecen en DETALLE_PEDIDO_2FN</td></tr>
+</tbody>
+</table>
+
+<h3>4.3.4 Transformaci&oacute;n a 2FN</h3>
+<p><span class="p4-etapa p4-antes">ANTES DE 2FN</span></p>
+<p>Tabla de partida: <strong>PEDIDO_1FN</strong>, con su clave compuesta y el detalle de de qu&eacute; depende cada atributo.</p>
+<div class="p4-scroll">
+<table class="p4">
+<thead><tr><th>Atributo</th><th>Clave</th><th>Depende de</th><th>Situaci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td><td>Parte de la clave compuesta</td></tr>
+<tr><td>id_producto</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td><td>Parte de la clave compuesta</td></tr>
+<tr><td>fecha_pedido, hora_pedido, estado_pedido</td><td>&mdash;</td><td>id_pedido</td><td>Dependencia parcial &rarr; sale de la tabla</td></tr>
+<tr><td>id_cliente, dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>id_cliente <span class="p4-fk"> FK</span></td><td>id_pedido</td><td>Dependencia parcial &rarr; sale de la tabla</td></tr>
+<tr><td>id_empleado, dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>id_empleado <span class="p4-fk"> FK</span></td><td>id_pedido</td><td>Dependencia parcial &rarr; sale de la tabla</td></tr>
+<tr><td>nombre_producto, descripcion_producto, precio_producto, estado_producto</td><td>&mdash;</td><td>id_producto</td><td>Dependencia parcial &rarr; sale de la tabla</td></tr>
+<tr><td>id_categoria, nombre_categoria, descripcion_categoria</td><td>id_categoria <span class="p4-fk"> FK</span></td><td>id_producto</td><td>Dependencia parcial &rarr; sale de la tabla</td></tr>
+<tr><td>id_pago, fecha_pago, monto, metodo_pago, estado_pago</td><td>id_pago <span class="p4-fk"> FK</span></td><td>id_pedido</td><td>Dependencia parcial &rarr; sale de la tabla</td></tr>
+<tr><td>cantidad, precio_unitario</td><td>&mdash;</td><td>(id_pedido, id_producto)</td><td>Dependencia total &rarr; <strong>se queda</strong></td></tr>
+</tbody>
+</table>
+</div>
+<p class="p4-flujo">&darr; IDENTIFICACI&Oacute;N DE DEPENDENCIAS PARCIALES &nbsp;&darr;&nbsp; DESCOMPOSICI&Oacute;N &darr;</p>
+<p><span class="p4-etapa p4-despues">DESPU&Eacute;S DE 2FN</span></p>
+
+<h4 class="p4-titulo-tabla">Tabla 1. PEDIDO_2FN &mdash; cabecera del pedido</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>fecha_pedido</td><td>Fecha</td><td>&mdash;</td><td>id_pedido</td></tr>
+<tr><td>hora_pedido</td><td>Hora</td><td>&mdash;</td><td>id_pedido</td></tr>
+<tr><td>estado_pedido</td><td>Cadena</td><td>&mdash;</td><td>id_pedido</td></tr>
+<tr><td>id_cliente</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>id_pedido</td></tr>
+<tr><td>dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>Cadena</td><td>&mdash;</td><td>id_cliente (transitiva &rarr; 3FN)</td></tr>
+<tr><td>id_empleado</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>id_pedido</td></tr>
+<tr><td>dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>Cadena</td><td>&mdash;</td><td>id_empleado (transitiva &rarr; 3FN)</td></tr>
+<tr><td>id_pago</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>id_pedido</td></tr>
+<tr><td>fecha_pago, monto, metodo_pago, estado_pago</td><td>Fecha / Decimal / Cadena</td><td>&mdash;</td><td>id_pago (transitiva &rarr; 3FN)</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 2. DETALLE_PEDIDO_2FN &mdash; productos de cada pedido</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td><span class="p4-pk"> PK</span> (parte) &nbsp;/&nbsp; <span class="p4-fk"> FK</span></td><td>&mdash;</td></tr>
+<tr><td>id_producto</td><td>Entero</td><td><span class="p4-pk"> PK</span> (parte) &nbsp;/&nbsp; <span class="p4-fk"> FK</span></td><td>&mdash;</td></tr>
+<tr><td>cantidad</td><td>Entero</td><td>&mdash;</td><td>(id_pedido, id_producto)</td></tr>
+<tr><td>precio_unitario</td><td>Decimal</td><td>&mdash;</td><td>(id_pedido, id_producto)</td></tr>
+</tbody>
+</table>
+<p class="p4-nota"><strong>Clave compuesta:</strong> en DETALLE_PEDIDO_2FN la clave primaria est&aacute; formada por <span class="p4-clave">(id_pedido, id_producto)</span> y, adem&aacute;s, cada uno de esos atributos es clave for&aacute;nea hacia PEDIDO_2FN y hacia PRODUCTO_2FN respectivamente.</p>
+
+<h4 class="p4-titulo-tabla">Tabla 3. PRODUCTO_2FN &mdash; cat&aacute;logo de productos</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_producto</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>nombre_producto</td><td>Cadena</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>descripcion_producto</td><td>Cadena</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>precio_producto</td><td>Decimal</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>estado_producto</td><td>Cadena</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>id_categoria</td><td>Entero</td><td><span class="p4-fk"> FK</span></td><td>id_producto</td></tr>
+<tr><td>nombre_categoria, descripcion_categoria</td><td>Cadena</td><td>&mdash;</td><td>id_categoria (transitiva &rarr; 3FN)</td></tr>
+</tbody>
+</table>
+
+<h3>4.3.5 La hoja RESERVAS ya cumple 2FN</h3>
+<p>La tabla <span class="p4-clave">RESERVA_1FN</span> tiene una <strong>clave primaria simple</strong> (<span class="p4-clave">id_reserva</span>). Como no existe una clave compuesta, <strong>no pueden existir dependencias parciales</strong>: todos sus atributos dependen de la clave completa. Por lo tanto, esta tabla ya cumple 2FN y se mantiene sin cambios en esta etapa.</p>
+
+<h2>4.4 Tercera Forma Normal (3FN)</h2>
+<p>Una tabla est&aacute; en <strong>Tercera Forma Normal</strong> si cumple 2FN y, adem&aacute;s, <strong>no existen dependencias transitivas</strong>: ning&uacute;n atributo no clave debe depender de otro atributo no clave. Es decir, no puede ocurrir <span class="p4-clave">X &rarr; Y &rarr; Z</span> cuando <span class="p4-clave">Y</span> no es clave de la tabla.</p>
+
+<h3>4.4.1 Dependencias transitivas identificadas</h3>
+<table class="p4">
+<thead><tr><th>Tabla antes de 3FN</th><th>Dependencia transitiva</th><th>Explicaci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>PEDIDO_2FN</td><td>id_pedido &rarr; <strong>id_cliente</strong> &rarr; dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>Los datos personales del cliente dependen del cliente, no del pedido; se repiten en cada pedido de ese cliente (PE01 y PE03 tienen a C01).</td></tr>
+<tr><td>PEDIDO_2FN</td><td>id_pedido &rarr; <strong>id_empleado</strong> &rarr; dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>Los datos del empleado dependen del empleado y se repiten en todos los pedidos que atiende (PE01 y PE03 tienen a E01).</td></tr>
+<tr><td>PEDIDO_2FN</td><td>id_pedido &rarr; <strong>id_pago</strong> &rarr; fecha_pago, monto, metodo_pago, estado_pago</td><td>Los datos del pago dependen del pago, no del pedido; el monto se repite en cada fila del detalle del mismo pedido.</td></tr>
+<tr><td>PRODUCTO_2FN</td><td>id_producto &rarr; <strong>id_categoria</strong> &rarr; nombre_categoria, descripcion_categoria</td><td>El nombre y la descripci&oacute;n de la categor&iacute;a dependen de la categor&iacute;a y se repiten en todos los productos de esa categor&iacute;a (P05 y P12 pertenecen a K01).</td></tr>
+<tr><td>RESERVA_1FN</td><td>id_reserva &rarr; <strong>id_cliente</strong> &rarr; dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>Los datos del cliente dependen del cliente y se repiten en todas sus reservas (R01 y R03 tienen a C02).</td></tr>
+<tr><td>RESERVA_1FN</td><td>id_reserva &rarr; <strong>id_mesa</strong> &rarr; numero_mesa, capacidad, estado_mesa</td><td>Los datos de la mesa dependen de la mesa y se repiten en todas las reservas asignadas a ella (R01 y R03 ocupan M01).</td></tr>
+<tr><td>DETALLE_PEDIDO_2FN</td><td>&mdash;</td><td>Ya cumple 3FN: sus dos &uacute;nicos atributos no clave (cantidad y precio_unitario) dependen de la clave completa y no de otro atributo no clave.</td></tr>
+</tbody>
+</table>
+
+<h3>4.4.2 Transformaci&oacute;n a 3FN</h3>
+<p><span class="p4-etapa p4-antes">ANTES DE 3FN</span></p>
+<p>Tabla comparativa del esquema de partida, se&ntilde;alando en cada caso el atributo no clave que provoca la dependencia transitiva:</p>
+<div class="p4-scroll">
+<table class="p4">
+<thead><tr><th>Tabla</th><th>Atributos no clave afectados</th><th>Atributo determinante (no clave)</th><th>Soluci&oacute;n</th></tr></thead>
+<tbody>
+<tr><td>PEDIDO_2FN</td><td>dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>id_cliente</td><td>Se extraen a la tabla CLIENTE</td></tr>
+<tr><td>PEDIDO_2FN</td><td>dni_empleado, nombres_empleado, apellidos_empleado, telefono_empleado, correo_empleado</td><td>id_empleado</td><td>Se extraen a la tabla EMPLEADO</td></tr>
+<tr><td>PEDIDO_2FN</td><td>fecha_pago, monto, metodo_pago, estado_pago</td><td>id_pago</td><td>Se extraen a la tabla PAGO</td></tr>
+<tr><td>PRODUCTO_2FN</td><td>nombre_categoria, descripcion_categoria</td><td>id_categoria</td><td>Se extraen a la tabla CATEGORIA</td></tr>
+<tr><td>RESERVA_1FN</td><td>dni_cliente, nombres_cliente, apellidos_cliente, telefono_cliente, correo_cliente</td><td>id_cliente</td><td>Se extraen a la tabla CLIENTE</td></tr>
+<tr><td>RESERVA_1FN</td><td>numero_mesa, capacidad, estado_mesa</td><td>id_mesa</td><td>Se extraen a la tabla MESA</td></tr>
+</tbody>
+</table>
+</div>
+<p class="p4-flujo">&darr; DEPENDENCIA TRANSITIVA IDENTIFICADA &nbsp;&darr;&nbsp; DESCOMPOSICI&Oacute;N &darr;</p>
+<p><span class="p4-etapa p4-despues">DESPU&Eacute;S DE 3FN</span></p>
+<p>Las tablas resultantes son las <strong>nueve tablas del modelo relacional</strong> del informe:</p>
+
+<h4 class="p4-titulo-tabla">Tabla 4. CLIENTE &mdash; extra&iacute;da de PEDIDO_2FN y de RESERVA_1FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_cliente</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>dni</td><td>Cadena</td><td>&mdash;</td><td>id_cliente</td></tr>
+<tr><td>nombres</td><td>Cadena</td><td>&mdash;</td><td>id_cliente</td></tr>
+<tr><td>apellidos</td><td>Cadena</td><td>&mdash;</td><td>id_cliente</td></tr>
+<tr><td>telefono</td><td>Cadena</td><td>&mdash;</td><td>id_cliente</td></tr>
+<tr><td>correo</td><td>Cadena</td><td>&mdash;</td><td>id_cliente</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 5. EMPLEADO &mdash; extra&iacute;da de PEDIDO_2FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_empleado</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>dni</td><td>Cadena</td><td>&mdash;</td><td>id_empleado</td></tr>
+<tr><td>nombres</td><td>Cadena</td><td>&mdash;</td><td>id_empleado</td></tr>
+<tr><td>apellidos</td><td>Cadena</td><td>&mdash;</td><td>id_empleado</td></tr>
+<tr><td>telefono</td><td>Cadena</td><td>&mdash;</td><td>id_empleado</td></tr>
+<tr><td>correo</td><td>Cadena</td><td>&mdash;</td><td>id_empleado</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 6. MESA &mdash; extra&iacute;da de RESERVA_1FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_mesa</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>numero_mesa</td><td>Entero</td><td>&mdash;</td><td>id_mesa</td></tr>
+<tr><td>capacidad</td><td>Entero</td><td>&mdash;</td><td>id_mesa</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>&mdash;</td><td>id_mesa</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 7. RESERVA &mdash; tabla resultante de RESERVA_1FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_reserva</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>fecha_reserva</td><td>Fecha</td><td>&mdash;</td><td>id_reserva</td></tr>
+<tr><td>hora_reserva</td><td>Hora</td><td>&mdash;</td><td>id_reserva</td></tr>
+<tr><td>cantidad_personas</td><td>Entero</td><td>&mdash;</td><td>id_reserva</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>&mdash;</td><td>id_reserva</td></tr>
+<tr><td>id_cliente</td><td>Entero</td><td><span class="p4-fk"> FK</span> &rarr; CLIENTE</td><td>id_reserva</td></tr>
+<tr><td>id_mesa</td><td>Entero</td><td><span class="p4-fk"> FK</span> &rarr; MESA</td><td>id_reserva</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 8. CATEGORIA &mdash; extra&iacute;da de PRODUCTO_2FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_categoria</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>nombre_categoria</td><td>Cadena</td><td>&mdash;</td><td>id_categoria</td></tr>
+<tr><td>descripcion</td><td>Cadena</td><td>&mdash;</td><td>id_categoria</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 9. PRODUCTO &mdash; tabla resultante de PRODUCTO_2FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_producto</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>nombre_producto</td><td>Cadena</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>descripcion</td><td>Cadena</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>precio</td><td>Decimal</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>&mdash;</td><td>id_producto</td></tr>
+<tr><td>id_categoria</td><td>Entero</td><td><span class="p4-fk"> FK</span> &rarr; CATEGORIA</td><td>id_producto</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 10. PEDIDO &mdash; tabla resultante de PEDIDO_2FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>fecha_pedido</td><td>Fecha</td><td>&mdash;</td><td>id_pedido</td></tr>
+<tr><td>hora_pedido</td><td>Hora</td><td>&mdash;</td><td>id_pedido</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>&mdash;</td><td>id_pedido</td></tr>
+<tr><td>id_cliente</td><td>Entero</td><td><span class="p4-fk"> FK</span> &rarr; CLIENTE</td><td>id_pedido</td></tr>
+<tr><td>id_empleado</td><td>Entero</td><td><span class="p4-fk"> FK</span> &rarr; EMPLEADO</td><td>id_pedido</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 11. DETALLE_PEDIDO &mdash; ya estaba en 3FN desde 2FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_pedido</td><td>Entero</td><td><span class="p4-pk"> PK</span> (parte) &nbsp;/&nbsp; <span class="p4-fk"> FK</span> &rarr; PEDIDO</td><td>&mdash;</td></tr>
+<tr><td>id_producto</td><td>Entero</td><td><span class="p4-pk"> PK</span> (parte) &nbsp;/&nbsp; <span class="p4-fk"> FK</span> &rarr; PRODUCTO</td><td>&mdash;</td></tr>
+<tr><td>cantidad</td><td>Entero</td><td>&mdash;</td><td>(id_pedido, id_producto)</td></tr>
+<tr><td>precio_unitario</td><td>Decimal</td><td>&mdash;</td><td>(id_pedido, id_producto)</td></tr>
+</tbody>
+</table>
+
+<h4 class="p4-titulo-tabla">Tabla 12. PAGO &mdash; extra&iacute;da de PEDIDO_2FN</h4>
+<table class="p4">
+<thead><tr><th>Campo</th><th>Tipo</th><th>Clave</th><th>Depende de</th></tr></thead>
+<tbody>
+<tr><td>id_pago</td><td>Entero</td><td><span class="p4-pk"> PK</span></td><td>&mdash;</td></tr>
+<tr><td>fecha_pago</td><td>Fecha</td><td>&mdash;</td><td>id_pago</td></tr>
+<tr><td>monto</td><td>Decimal</td><td>&mdash;</td><td>id_pago</td></tr>
+<tr><td>metodo_pago</td><td>Cadena</td><td>&mdash;</td><td>id_pago</td></tr>
+<tr><td>estado</td><td>Cadena</td><td>&mdash;</td><td>id_pago</td></tr>
+<tr><td>id_pedido</td><td>Entero</td><td><span class="p4-fk"> FK</span> &rarr; PEDIDO (relaci&oacute;n 1:1)</td><td>id_pedido</td></tr>
+</tbody>
+</table>
+<p class="p4-nota"><strong>Relaci&oacute;n 1:1 PEDIDO&ndash;PAGO:</strong> al extraer el pago a su propia tabla se conserva el v&iacute;nculo mediante la clave for&aacute;nea <span class="p4-clave">id_pedido</span> dentro de PAGO. Para que la relaci&oacute;n siga siendo 1:1, ese valor debe ser &uacute;nico (un solo pago por pedido).</p>
+
+<h3>4.4.3 Modelo relacional resultante en 3FN</h3>
+<table class="p4">
+<thead><tr><th>Tabla</th><th>Clave primaria</th><th>Claves for&aacute;neas</th><th>Relaci&oacute;n que representa</th></tr></thead>
+<tbody>
+<tr><td>CLIENTE</td><td><span class="p4-pk"> PK</span> id_cliente</td><td>&mdash;</td><td>Datos de los clientes (1:N con RESERVA y con PEDIDO)</td></tr>
+<tr><td>EMPLEADO</td><td><span class="p4-pk"> PK</span> id_empleado</td><td>&mdash;</td><td>Datos de los empleados (1:N con PEDIDO)</td></tr>
+<tr><td>MESA</td><td><span class="p4-pk"> PK</span> id_mesa</td><td>&mdash;</td><td>Mesas del restaurante (1:N con RESERVA)</td></tr>
+<tr><td>RESERVA</td><td><span class="p4-pk"> PK</span> id_reserva</td><td><span class="p4-fk"> FK</span> id_cliente &rarr; CLIENTE<br><span class="p4-fk"> FK</span> id_mesa &rarr; MESA</td><td>Reservas realizadas por los clientes</td></tr>
+<tr><td>CATEGORIA</td><td><span class="p4-pk"> PK</span> id_categoria</td><td>&mdash;</td><td>Categor&iacute;as del cat&aacute;logo (1:N con PRODUCTO)</td></tr>
+<tr><td>PRODUCTO</td><td><span class="p4-pk"> PK</span> id_producto</td><td><span class="p4-fk"> FK</span> id_categoria &rarr; CATEGORIA</td><td>Productos ofrecidos por el restaurante</td></tr>
+<tr><td>PEDIDO</td><td><span class="p4-pk"> PK</span> id_pedido</td><td><span class="p4-fk"> FK</span> id_cliente &rarr; CLIENTE<br><span class="p4-fk"> FK</span> id_empleado &rarr; EMPLEADO</td><td>Pedidos registrados en el restaurante</td></tr>
+<tr><td>DETALLE_PEDIDO</td><td><span class="p4-pk"> PK</span> (id_pedido, id_producto)</td><td><span class="p4-fk"> FK</span> id_pedido &rarr; PEDIDO<br><span class="p4-fk"> FK</span> id_producto &rarr; PRODUCTO</td><td>Productos y cantidades de cada pedido (resuelve la relaci&oacute;n N:M entre PEDIDO y PRODUCTO)</td></tr>
+<tr><td>PAGO</td><td><span class="p4-pk"> PK</span> id_pago</td><td><span class="p4-fk"> FK</span> id_pedido &rarr; PEDIDO</td><td>Pago asociado a cada pedido (1:1)</td></tr>
+</tbody>
+</table>
+<p>El resultado coincide con el <strong>modelo relacional del informe</strong> (secciones 2.2, 2.3 y 2.4): cada tabla tiene una clave primaria definida, las claves for&aacute;neas reproducen las relaciones <em>CLIENTE&ndash;RESERVA</em>, <em>RESERVA&ndash;MESA</em>, <em>CLIENTE&ndash;PEDIDO</em>, <em>EMPLEADO&ndash;PEDIDO</em>, <em>PEDIDO&ndash;DETALLE_PEDIDO</em>, <em>PRODUCTO&ndash;DETALLE_PEDIDO</em>, <em>CATEGORIA&ndash;PRODUCTO</em> y <em>PEDIDO&ndash;PAGO</em>, y la tabla <em>DETALLE_PEDIDO</em> mantiene la clave compuesta que resuelve la relaci&oacute;n N:M entre pedidos y productos.</p>
+
+<h2>4.5 Verificaci&oacute;n de preservaci&oacute;n de dependencias funcionales</h2>
+<p>Una descomposici&oacute;n preserva las dependencias funcionales si cada dependencia del esquema original puede verificarse dentro de alguna de las tablas resultantes, sin necesidad de reunir tablas mediante <em>joins</em>. La siguiente tabla comprueba, una por una, las dependencias funcionales del modelo:</p>
+<table class="p4">
+<thead><tr><th>Dependencia funcional</th><th>Tabla donde se preserva</th><th>Resultado</th></tr></thead>
+<tbody>
+<tr><td>id_cliente &rarr; dni, nombres, apellidos, telefono, correo</td><td>CLIENTE</td><td>Se preserva</td></tr>
+<tr><td>id_empleado &rarr; dni, nombres, apellidos, telefono, correo</td><td>EMPLEADO</td><td>Se preserva</td></tr>
+<tr><td>id_mesa &rarr; numero_mesa, capacidad, estado</td><td>MESA</td><td>Se preserva</td></tr>
+<tr><td>id_categoria &rarr; nombre_categoria, descripcion</td><td>CATEGORIA</td><td>Se preserva</td></tr>
+<tr><td>id_reserva &rarr; fecha_reserva, hora_reserva, cantidad_personas, estado, id_cliente, id_mesa</td><td>RESERVA</td><td>Se preserva</td></tr>
+<tr><td>id_producto &rarr; nombre_producto, descripcion, precio, estado, id_categoria</td><td>PRODUCTO</td><td>Se preserva</td></tr>
+<tr><td>id_pedido &rarr; fecha_pedido, hora_pedido, estado, id_cliente, id_empleado</td><td>PEDIDO</td><td>Se preserva</td></tr>
+<tr><td>(id_pedido, id_producto) &rarr; cantidad, precio_unitario</td><td>DETALLE_PEDIDO</td><td>Se preserva</td></tr>
+<tr><td>id_pago &rarr; fecha_pago, monto, metodo_pago, estado</td><td>PAGO</td><td>Se preserva</td></tr>
+<tr><td>id_pedido &rarr; id_pago &nbsp;(&ldquo;cada pedido tiene un pago&rdquo;, relaci&oacute;n 1:1)</td><td>PAGO (clave for&aacute;nea id_pedido, &uacute;nica)</td><td>Se preserva</td></tr>
+<tr><td>id_pedido &rarr; id_cliente &nbsp;(pedido pertenece a un cliente)</td><td>PEDIDO (clave for&aacute;nea id_cliente)</td><td>Se preserva</td></tr>
+<tr><td>id_pedido &rarr; id_empleado &nbsp;(pedido registrado por un empleado)</td><td>PEDIDO (clave for&aacute;nea id_empleado)</td><td>Se preserva</td></tr>
+<tr><td>id_producto &rarr; id_categoria &nbsp;(producto pertenece a una categor&iacute;a)</td><td>PRODUCTO (clave for&aacute;nea id_categoria)</td><td>Se preserva</td></tr>
+<tr><td>id_reserva &rarr; id_cliente, id_mesa &nbsp;(reserva asociada a un cliente y a una mesa)</td><td>RESERVA (claves for&aacute;neas id_cliente e id_mesa)</td><td>Se preserva</td></tr>
+</tbody>
+</table>
+<p class="p4-nota"><strong>Conclusi&oacute;n de la verificaci&oacute;n.</strong> Todas las dependencias funcionales del esquema inicial est&aacute;n representadas en las nueve tablas obtenidas: las que antes eran <em>parciales</em> o <em>transitivas</em> ahora son dependencias directas desde la clave primaria de la tabla correspondiente. Adem&aacute;s, la descomposici&oacute;n es <strong>sin p&eacute;rdida de informaci&oacute;n</strong>, porque en cada etapa se conserv&oacute; la clave primaria de la tabla descompuesta y las claves for&aacute;neas permiten reconstruir las filas originales mediante reuniones (<em>join</em>). El esquema final (tablas 4 a 12) cumple 1FN, 2FN y 3FN.</p>
 
 <script>
 (function generarDiagramasDocumento() {
