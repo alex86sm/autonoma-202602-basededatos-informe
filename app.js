@@ -134,6 +134,8 @@
 
   function detectTitle(text) {
     const normalized = clean(text);
+    const cases = extractList(text, "Casos de uso");
+    if (cases && cases.length === 1) return `Caso de uso · ${cases[0]}`;
     const groupTitle = extractList(text, "Título del grupo");
     if (groupTitle && groupTitle.length) return `Casos de uso · ${groupTitle[0]}`;
     if (/casos de uso/i.test(normalized)) return "Diagrama de casos de uso";
@@ -216,7 +218,7 @@
     const fs = options.fontSize;
     const actors = extractList(task.instructions, "Actores") || Object.keys(actorUseCases);
     const cases = extractList(task.instructions, "Casos de uso") || [...new Set(Object.values(actorUseCases).flat())];
-    const groupTitle = (extractList(task.instructions, "Título del grupo") || ["Diagrama UML de Casos de Uso"])[0];
+    const groupTitle = (extractList(task.instructions, "Título del grupo") || [cases.length === 1 ? `Caso de uso: ${cases[0]}` : "Diagrama UML de Casos de Uso"])[0];
 
     // Cada figura cubre sólo el grupo: el tamaño y la distribución se calculan a partir de su contenido.
     const columns = cases.length <= 2 ? Math.max(cases.length, 1) : 2;

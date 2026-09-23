@@ -14,7 +14,7 @@
       line-height: 1.5;
       background: #ffffff;
     }
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
       color: #0f172a;
       line-height: 1.25;
       page-break-after: avoid;
@@ -30,6 +30,11 @@
     h3 {
       margin-top: 18px;
       font-size: 13.5pt;
+    }
+    h4 {
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-size: 12pt;
     }
     p {
       margin: 0 0 12px;
@@ -199,6 +204,9 @@
 <li><strong>CLIENTE</strong> (entidad principal del caso de uso).</li>
 <li><strong>RESERVA</strong> y <strong>PEDIDO</strong> (registros que quedan asociados al cliente mediante id_cliente).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu01">
+  <figcaption>Figura. Caso de uso CU-01 &ndash; Gestionar clientes.</figcaption>
+</figure>
 <h3>CU-02 &ndash; Gestionar reservas</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar las reservas solicitadas por los clientes y consultar su estado a lo largo del tiempo.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -219,6 +227,9 @@
 <li><strong>CLIENTE</strong> (a trav&eacute;s de id_cliente).</li>
 <li><strong>MESA</strong> (a trav&eacute;s de id_mesa, seg&uacute;n la regla RN-03).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu02">
+  <figcaption>Figura. Caso de uso CU-02 &ndash; Gestionar reservas.</figcaption>
+</figure>
 <h3>CU-03 &ndash; Gestionar mesas</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar las mesas del restaurante y consultar su disponibilidad y estado actual.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -237,6 +248,9 @@
 <li><strong>MESA</strong> (entidad principal del caso de uso).</li>
 <li><strong>RESERVA</strong> (referencia la mesa asignada a cada reserva).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu03">
+  <figcaption>Figura. Caso de uso CU-03 &ndash; Gestionar mesas.</figcaption>
+</figure>
 <h3>CU-04 &ndash; Gestionar productos</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar y actualizar los productos ofrecidos por el restaurante, as&iacute; como su disponibilidad y precio.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -257,6 +271,9 @@
 <li><strong>CATEGORIA</strong> (a trav&eacute;s de id_categoria, seg&uacute;n la regla RN-10).</li>
 <li><strong>DETALLE_PEDIDO</strong> (registra el producto dentro de cada pedido).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu04">
+  <figcaption>Figura. Caso de uso CU-04 &ndash; Gestionar productos.</figcaption>
+</figure>
 <h3>CU-05 &ndash; Gestionar categor&iacute;as</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite administrar las categor&iacute;as que agrupan los productos, manteniendo esta informaci&oacute;n separada para evitar duplicidad de datos.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -273,6 +290,9 @@
 <li><strong>CATEGORIA</strong> (entidad principal del caso de uso).</li>
 <li><strong>PRODUCTO</strong> (los productos se clasifican en una categor&iacute;a, seg&uacute;n la regla RN-14).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu05">
+  <figcaption>Figura. Caso de uso CU-05 &ndash; Gestionar categor&iacute;as.</figcaption>
+</figure>
 <h3>CU-06 &ndash; Registrar pedido</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar un pedido asociado a un cliente y a un empleado, incluyendo los productos solicitados con su cantidad y precio unitario.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -294,6 +314,9 @@
 <li><strong>EMPLEADO</strong> (a trav&eacute;s de id_empleado, seg&uacute;n la regla RN-07).</li>
 <li><strong>DETALLE_PEDIDO</strong> y <strong>PRODUCTO</strong> (detalle de los productos incluidos en el pedido).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu06">
+  <figcaption>Figura. Caso de uso CU-06 &ndash; Registrar pedido.</figcaption>
+</figure>
 <h3>CU-07 &ndash; Consultar pedido</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite consultar los productos incluidos en un pedido y su estado actual de atenci&oacute;n.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -314,6 +337,9 @@
 <li><strong>DETALLE_PEDIDO</strong> y <strong>PRODUCTO</strong> (detalle de lo solicitado).</li>
 <li><strong>EMPLEADO</strong> y <strong>CLIENTE</strong> (empleado que registr&oacute; el pedido y cliente que lo solicit&oacute;).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu07">
+  <figcaption>Figura. Caso de uso CU-07 &ndash; Consultar pedido.</figcaption>
+</figure>
 <h3>CU-08 &ndash; Registrar pago</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar el pago correspondiente a un pedido, indicando el monto, el m&eacute;todo utilizado y su estado.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -332,6 +358,9 @@
 <li><strong>PAGO</strong> (entidad principal del caso de uso).</li>
 <li><strong>PEDIDO</strong> (a trav&eacute;s de id_pedido, seg&uacute;n la regla RN-12).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu08">
+  <figcaption>Figura. Caso de uso CU-08 &ndash; Registrar pago.</figcaption>
+</figure>
 <h3>CU-09 &ndash; Gestionar empleados</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite registrar y consultar la informaci&oacute;n de los empleados del restaurante, considerando que pueden desempe&ntilde;ar diferentes funciones.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -351,6 +380,9 @@
 <li><strong>EMPLEADO</strong> (entidad principal del caso de uso).</li>
 <li><strong>PEDIDO</strong> (los pedidos registrados por el empleado, seg&uacute;n la regla RN-13).</li>
 </ul>
+<figure class="generated-figure" data-diagram="usecase-cu09">
+  <figcaption>Figura. Caso de uso CU-09 &ndash; Gestionar empleados.</figcaption>
+</figure>
 <h3>CU-10 &ndash; Consultar ventas</h3>
 <p><strong>Descripci&oacute;n:</strong> Permite consultar la informaci&oacute;n relacionada con los pedidos registrados y los pagos realizados, con el fin de revisar el movimiento del restaurante.</p>
 <p><strong>Usuario involucrado:</strong></p>
@@ -371,23 +403,8 @@
 <li><strong>PAGO</strong> (monto y estado de los pagos, relaci&oacute;n 1:1 con el pedido).</li>
 <li><strong>DETALLE_PEDIDO</strong> y <strong>PRODUCTO</strong> (productos y cantidades vendidas).</li>
 </ul>
-<h3>Representaci&oacute;n visual de los casos de uso</h3>
-<p>Las figuras siguientes organizan los diez casos de uso en cuatro grupos conceptuales, con el fin de facilitar su lectura. Cada figura muestra &uacute;nicamente los actores y los casos de uso que intervienen en el grupo correspondiente.</p>
-<p><strong>Figura. Gesti&oacute;n de personas del sistema.</strong></p>
-<figure class="generated-figure" data-diagram="usecase-g1">
-  <figcaption>Figura. Gesti&oacute;n de personas del sistema.</figcaption>
-</figure>
-<p><strong>Figura. Gesti&oacute;n del establecimiento.</strong></p>
-<figure class="generated-figure" data-diagram="usecase-g2">
-  <figcaption>Figura. Gesti&oacute;n del establecimiento.</figcaption>
-</figure>
-<p><strong>Figura. Gesti&oacute;n de productos.</strong></p>
-<figure class="generated-figure" data-diagram="usecase-g3">
-  <figcaption>Figura. Gesti&oacute;n de productos.</figcaption>
-</figure>
-<p><strong>Figura. Operaciones principales del restaurante.</strong></p>
-<figure class="generated-figure" data-diagram="usecase-g4">
-  <figcaption>Figura. Operaciones principales del restaurante.</figcaption>
+<figure class="generated-figure" data-diagram="usecase-cu10">
+  <figcaption>Figura. Caso de uso CU-10 &ndash; Consultar ventas.</figcaption>
 </figure>
 <h1>2. Modelo Conceptual: Diagrama Entidad-Relación</h1>
 <h2>2.1 Identificación de entidades</h2>
@@ -681,7 +698,7 @@
     return '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" role="img">' +
       '<defs><style>.t{font-family:Arial,Helvetica,sans-serif;font-size:13px;fill:#111827}.b{font-weight:700}.h{font-family:Arial,Helvetica,sans-serif;font-size:18px;font-weight:700;fill:#111827}.w{fill:#fff}.g{fill:#f8fafc}.teal{fill:#0f766e}.line{stroke:#475569;stroke-width:1.6}.key{font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:700;fill:#0f766e}.small{font-family:Arial,Helvetica,sans-serif;font-size:11px;fill:#475569}</style></defs><rect width="100%" height="100%" fill="#ffffff"/>' + content + '</svg>';
   }
-  function usecaseGroupSvg(groupTitle, groupActors, groupCases) {
+  function usecaseCuSvg(groupTitle, groupActors, groupCases) {
     const columns = groupCases.length <= 2 ? Math.max(groupCases.length, 1) : 2;
     const rows = Math.ceil(groupCases.length / columns);
     const colGap = 320, rowGap = 104, caseRx = 132, caseRy = 34;
@@ -725,13 +742,19 @@
     const h = Math.max(boundaryTop + boundaryH + 70, actorBottom + 50, 480);
     return wrap(w, h, s);
   }
-  const gruposCU = [
-    { id: 'usecase-g1', titulo: 'Gesti\u00f3n de personas', actores: ['Recepcionista', 'Administrador'], casos: ['Gestionar clientes', 'Gestionar empleados'] },
-    { id: 'usecase-g2', titulo: 'Gesti\u00f3n del establecimiento', actores: ['Recepcionista', 'Cliente', 'Administrador'], casos: ['Gestionar reservas', 'Gestionar mesas'] },
-    { id: 'usecase-g3', titulo: 'Gesti\u00f3n de productos', actores: ['Administrador'], casos: ['Gestionar productos', 'Gestionar categor\u00edas'] },
-    { id: 'usecase-g4', titulo: 'Operaciones principales', actores: ['Mozo', 'Cliente', 'Cocinero', 'Cajero', 'Administrador'], casos: ['Registrar pedido', 'Consultar pedido', 'Registrar pago', 'Consultar ventas'] }
+  const casosCU = [
+    { id: 'usecase-cu01', caso: 'Gestionar clientes', actores: ['Recepcionista'] },
+    { id: 'usecase-cu02', caso: 'Gestionar reservas', actores: ['Recepcionista', 'Cliente'] },
+    { id: 'usecase-cu03', caso: 'Gestionar mesas', actores: ['Recepcionista', 'Administrador'] },
+    { id: 'usecase-cu04', caso: 'Gestionar productos', actores: ['Administrador'] },
+    { id: 'usecase-cu05', caso: 'Gestionar categor\u00edas', actores: ['Administrador'] },
+    { id: 'usecase-cu06', caso: 'Registrar pedido', actores: ['Mozo', 'Cliente'] },
+    { id: 'usecase-cu07', caso: 'Consultar pedido', actores: ['Mozo', 'Cajero', 'Cocinero'] },
+    { id: 'usecase-cu08', caso: 'Registrar pago', actores: ['Cajero'] },
+    { id: 'usecase-cu09', caso: 'Gestionar empleados', actores: ['Administrador'] },
+    { id: 'usecase-cu10', caso: 'Consultar ventas', actores: ['Administrador', 'Cajero'] }
   ];
-  gruposCU.forEach(g => document.querySelectorAll('[data-diagram="' + g.id + '"]').forEach(el => svgToImage(usecaseGroupSvg(g.titulo, g.actores, g.casos), g.titulo, el)));
+  casosCU.forEach(c => document.querySelectorAll('[data-diagram="' + c.id + '"]').forEach(el => svgToImage(usecaseCuSvg('Caso de uso: ' + c.caso, c.actores, [c.caso]), 'Caso de uso ' + c.caso, el)));
   function center(name) { return { x: pos[name][0] + 105, y: pos[name][1] + 78 }; }
   function entidad(nombre) {
     const p = pos[nombre], at = atributos[nombre], alto = 36 + at.length * 21;

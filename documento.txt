@@ -115,6 +115,24 @@ Información que interviene en la base de datos:
 - CLIENTE (entidad principal del caso de uso).
 - RESERVA y PEDIDO (registros que quedan asociados al cliente mediante id_cliente).
 
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Gestionar clientes".
+
+Actores:
+- Recepcionista
+
+Casos de uso:
+- Gestionar clientes
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-01 – Gestionar clientes.**
+
+---
+
 ### CU-02 – Gestionar reservas
 
 Descripción:
@@ -135,6 +153,25 @@ Información que interviene en la base de datos:
 - CLIENTE (a través de id_cliente).
 - MESA (a través de id_mesa, según la regla RN-03).
 
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Gestionar reservas".
+
+Actores:
+- Recepcionista
+- Cliente
+
+Casos de uso:
+- Gestionar reservas
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-02 – Gestionar reservas.**
+
+---
+
 ### CU-03 – Gestionar mesas
 
 Descripción:
@@ -152,6 +189,25 @@ Información gestionada:
 Información que interviene en la base de datos:
 - MESA (entidad principal del caso de uso).
 - RESERVA (referencia la mesa asignada a cada reserva).
+
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Gestionar mesas".
+
+Actores:
+- Recepcionista
+- Administrador
+
+Casos de uso:
+- Gestionar mesas
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-03 – Gestionar mesas.**
+
+---
 
 ### CU-04 – Gestionar productos
 
@@ -173,6 +229,24 @@ Información que interviene en la base de datos:
 - CATEGORIA (a través de id_categoria, según la regla RN-10).
 - DETALLE_PEDIDO (registra el producto dentro de cada pedido).
 
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Gestionar productos".
+
+Actores:
+- Administrador
+
+Casos de uso:
+- Gestionar productos
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-04 – Gestionar productos.**
+
+---
+
 ### CU-05 – Gestionar categorías
 
 Descripción:
@@ -188,6 +262,24 @@ Información gestionada:
 Información que interviene en la base de datos:
 - CATEGORIA (entidad principal del caso de uso).
 - PRODUCTO (los productos se clasifican en una categoría, según la regla RN-14).
+
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Gestionar categorías".
+
+Actores:
+- Administrador
+
+Casos de uso:
+- Gestionar categorías
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-05 – Gestionar categorías.**
+
+---
 
 ### CU-06 – Registrar pedido
 
@@ -210,6 +302,25 @@ Información que interviene en la base de datos:
 - EMPLEADO (a través de id_empleado, según la regla RN-07).
 - DETALLE_PEDIDO y PRODUCTO (detalle de los productos incluidos en el pedido).
 
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Registrar pedido".
+
+Actores:
+- Mozo
+- Cliente
+
+Casos de uso:
+- Registrar pedido
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-06 – Registrar pedido.**
+
+---
+
 ### CU-07 – Consultar pedido
 
 Descripción:
@@ -230,6 +341,26 @@ Información que interviene en la base de datos:
 - DETALLE_PEDIDO y PRODUCTO (detalle de lo solicitado).
 - EMPLEADO y CLIENTE (empleado que registró el pedido y cliente que lo solicitó).
 
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Consultar pedido".
+
+Actores:
+- Mozo
+- Cajero
+- Cocinero
+
+Casos de uso:
+- Consultar pedido
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-07 – Consultar pedido.**
+
+---
+
 ### CU-08 – Registrar pago
 
 Descripción:
@@ -247,6 +378,24 @@ Información gestionada:
 Información que interviene en la base de datos:
 - PAGO (entidad principal del caso de uso).
 - PEDIDO (a través de id_pedido, según la regla RN-12).
+
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Registrar pago".
+
+Actores:
+- Cajero
+
+Casos de uso:
+- Registrar pago
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-08 – Registrar pago.**
+
+---
 
 ### CU-09 – Gestionar empleados
 
@@ -266,6 +415,24 @@ Información gestionada:
 Información que interviene en la base de datos:
 - EMPLEADO (entidad principal del caso de uso).
 - PEDIDO (los pedidos registrados por el empleado, según la regla RN-13).
+
+#=====IMAGE====#
+
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Gestionar empleados".
+
+Actores:
+- Administrador
+
+Casos de uso:
+- Gestionar empleados
+
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
+
+#=====FINIMAGE====#
+
+**Figura. Caso de uso CU-09 – Gestionar empleados.**
+
+---
 
 ### CU-10 – Consultar ventas
 
@@ -287,98 +454,22 @@ Información que interviene en la base de datos:
 - PAGO (monto y estado de los pagos, relación 1:1 con el pedido).
 - DETALLE_PEDIDO y PRODUCTO (productos y cantidades vendidas).
 
-### Representación visual de los casos de uso
-
-Las figuras siguientes organizan los diez casos de uso en cuatro grupos conceptuales, con el fin de facilitar su lectura. Cada figura muestra únicamente los actores y los casos de uso que intervienen en el grupo correspondiente.
-
-**Figura. Gestión de personas del sistema.**
-
 #=====IMAGE====#
 
-Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de gestión de personas.
-
-Título del grupo:
-- Gestión de personas
-
-Actores:
-- Recepcionista
-- Administrador
-
-Casos de uso:
-- Gestionar clientes
-- Gestionar empleados
-
-La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
-
-#=====FINIMAGE====#
-
-**Figura. Gestión del establecimiento.**
-
-#=====IMAGE====#
-
-Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de gestión del establecimiento.
-
-Título del grupo:
-- Gestión del establecimiento
-
-Actores:
-- Recepcionista
-- Cliente
-- Administrador
-
-Casos de uso:
-- Gestionar reservas
-- Gestionar mesas
-
-La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
-
-#=====FINIMAGE====#
-
-**Figura. Gestión de productos.**
-
-#=====IMAGE====#
-
-Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de gestión de productos.
-
-Título del grupo:
-- Gestión de productos
+Generar un **diagrama UML de caso de uso individual** del Sistema de Gestión de Restaurante para el caso de uso "Consultar ventas".
 
 Actores:
 - Administrador
-
-Casos de uso:
-- Gestionar productos
-- Gestionar categorías
-
-La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
-
-#=====FINIMAGE====#
-
-**Figura. Operaciones principales del restaurante.**
-
-#=====IMAGE====#
-
-Generar una **figura académica de casos de uso UML** del Sistema de Gestión de Restaurante para el grupo conceptual de operaciones principales.
-
-Título del grupo:
-- Operaciones principales
-
-Actores:
-- Mozo
-- Cliente
-- Cocinero
 - Cajero
-- Administrador
 
 Casos de uso:
-- Registrar pedido
-- Consultar pedido
-- Registrar pago
 - Consultar ventas
 
-La figura debe mostrar únicamente los actores y los casos de uso de este grupo, con sus asociaciones, en una distribución limpia, ordenada y legible.
+El diagrama debe mostrar el sistema mediante un rectángulo, los actores fuera del sistema, el caso de uso mediante un óvalo y la línea de asociación entre cada actor y el caso de uso.
 
 #=====FINIMAGE====#
+
+**Figura. Caso de uso CU-10 – Consultar ventas.**
 
 
 # 2. Modelo Conceptual: Diagrama Entidad-Relación
